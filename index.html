@@ -63,13 +63,17 @@
         }
         #search-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
         #controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .full-width-btn { grid-column: span 2; background: rgba(16, 185, 129, 0.2) !important; color: #10b981 !important; border-color: #10b981 !important; }
         button {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
             color: #cbd5e1; padding: 10px; border-radius: 6px;
             font-weight: bold; cursor: pointer; transition: 0.2s;
         }
         button:hover { background: var(--accent) !important; color: #000 !important; border-color: var(--accent) !important; }
+        .accent-btn {
+            background: rgba(16, 185, 129, 0.2) !important;
+            color: #10b981 !important;
+            border-color: #10b981 !important;
+        }
         #log {
             flex-grow: 1; overflow-y: auto; padding: 15px;
             display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
@@ -93,7 +97,7 @@
             width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
-     
+    
         .item span, .log-entry span {
             pointer-events: none; font-size: 0.65rem; font-weight: 800;
             text-transform: uppercase; color: #e2e8f0; text-align: center;
@@ -119,7 +123,7 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         .modal-header h2 { margin: 0; color: #10b981; font-size: 1.2rem; display: flex; align-items: center; gap: 15px; }
-     
+    
         #extra-counter {
             background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 10px;
             border-radius: 20px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;
@@ -128,7 +132,7 @@
         .close-btn { background: none; border: none; color: #cbd5e1; font-size: 24px; cursor: pointer; padding: 0; line-height: 1; }
         .close-btn:hover { color: #ef4444; background: none !important; border-color: transparent !important; }
         .modal-body { padding: 20px; overflow-y: auto; }
-     
+    
         #extra-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px;
         }
@@ -159,6 +163,8 @@
 </head>
 <body>
 <div id="unlock-flash"></div>
+
+<!-- EXTRA MODAL (Encyclopedia) -->
 <div id="extra-modal" class="modal-overlay" onclick="closeExtra(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -168,6 +174,8 @@
         <div class="modal-body" id="extra-grid"></div>
     </div>
 </div>
+
+<!-- INFO MODAL -->
 <div id="info-modal" class="modal-overlay" onclick="closeInfo(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -183,6 +191,20 @@
         </div>
     </div>
 </div>
+
+<!-- NEW HINT MODAL -->
+<div id="hint-modal" class="modal-overlay" onclick="closeHint(event)">
+    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 520px;">
+        <div class="modal-header">
+            <h2>💡 Hint</h2>
+            <button class="close-btn" onclick="closeHint()">&times;</button>
+        </div>
+        <div class="modal-body" id="hint-body" style="text-align: center; padding: 30px 20px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+
 <div id="app">
     <div id="watermark">game made by Vewerty Ploik</div>
     <div id="workspace"></div>
@@ -193,16 +215,18 @@
             <div id="controls">
                 <button onclick="clearWorkspace()">Clear Board</button>
                 <button onclick="resetGame()">Reset Save</button>
-                <button class="full-width-btn" onclick="openExtra()">Extra</button>
+                <button class="accent-btn" onclick="openExtra()">Extra</button>
+                <button class="accent-btn" onclick="openHint()">Hint</button>
             </div>
         </div>
         <div id="log"></div>
     </div>
 </div>
+
 <script>
     const customArrowSVG = `<svg class="recipe-arrow-svg" viewBox="0 0 100 100"><path d="M20 50 L70 50 M50 30 L70 50 L50 70" stroke="#10b981" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const unknownSVG = `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#64748b" rx="10"/><text x="50" y="62" fill="#f8fafc" font-family="sans-serif" font-size="45" font-weight="800" text-anchor="middle" dominant-baseline="middle">?</text></svg>`;
-
+    
     // List of items added in version 1.1
     const v1_1_Items = [
         "Ice", "Snow", "Snowman", "Igloo", "Ship", "Pirate", "Kraken", "Mermaid",
@@ -221,7 +245,7 @@
     ];
 
     const svgArt = {
-        // --- v1.0 ITEMS (unchanged) ---
+        // (unchanged – all your original SVG art stays exactly the same)
         "Water": `<svg viewBox="0 0 100 100"><path d="M50 15 C 20 50, 20 85, 50 85 C 80 85, 80 50, 50 15" fill="#0ea5e9"/><path d="M60 50 A 15 15 0 0 1 70 70" stroke="rgba(255,255,255,0.5)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
         "Fire": `<svg viewBox="0 0 100 100"><path d="M50 10 Q 30 40 40 60 Q 20 50 30 80 Q 50 90 70 80 Q 80 50 60 60 Q 70 40 50 10 Z" fill="#ef4444"/><path d="M50 40 Q 40 60 45 75 Q 50 80 55 75 Q 60 60 50 40 Z" fill="#facc15"/></svg>`,
         "Earth": `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#84cc16"/><path d="M10 50 A 40 40 0 0 0 90 50 Q 70 30 50 50 Q 30 70 10 50" fill="#10b981"/><path d="M30 20 Q 50 40 70 20" stroke="#4d7c0f" stroke-width="4" fill="none"/></svg>`,
@@ -320,8 +344,7 @@
         "Queen": `<svg viewBox="0 0 100 100"><path d="M 20 80 L 80 80 L 90 40 Q 70 20 50 40 Q 30 20 10 40 Z" fill="#fcd34d"/><line x1="20" y1="80" x2="80" y2="80" stroke="#d97706" stroke-width="6" stroke-linecap="round"/><circle cx="10" cy="40" r="4" fill="#a855f7"/><circle cx="50" cy="40" r="6" fill="#ec4899"/><circle cx="90" cy="40" r="4" fill="#a855f7"/><path d="M 50 20 L 50 35 M 40 27 L 60 27" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="60" r="3" fill="#fff"/><circle cx="70" cy="60" r="3" fill="#fff"/></svg>`,
         "Jester": `<svg viewBox="0 0 100 100"><path d="M 50 40 L 20 10 Q 10 30 30 50 Z" fill="#ef4444"/><path d="M 50 40 L 80 10 Q 90 30 70 50 Z" fill="#3b82f6"/><circle cx="20" cy="10" r="6" fill="#fbbf24"/><circle cx="80" cy="10" r="6" fill="#fbbf24"/><circle cx="50" cy="60" r="25" fill="#fbcfe8"/><circle cx="40" cy="55" r="4" fill="#000"/><circle cx="60" cy="55" r="4" fill="#000"/><path d="M 40 70 Q 50 80 60 70" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M 40 40 L 50 5 L 60 40 Z" fill="#10b981"/><circle cx="50" cy="5" r="6" fill="#fbbf24"/></svg>`,
         "Obsidian": `<svg viewBox="0 0 100 100"><polygon points="30,80 15,50 40,20 70,30 85,60 60,90" fill="#1e1b4b"/><polygon points="40,20 70,30 50,55" fill="#312e81"/><polygon points="15,50 40,20 50,55" fill="#3730a3"/><polygon points="30,80 15,50 50,55" fill="#4338ca"/><polygon points="60,90 30,80 50,55" fill="#312e81"/><polygon points="85,60 60,90 50,55" fill="#3730a3"/><polygon points="70,30 85,60 50,55" fill="#4338ca"/><line x1="45" y1="35" x2="60" y2="40" stroke="#818cf8" stroke-width="2"/></svg>`,
-
-        // --- v1.1 ITEMS ---
+        // --- v1.1 ITEMS (all your original SVGs remain) ---
         "Ice": `<svg viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" fill="#bae6fd" stroke="#38bdf8" stroke-width="4"/><line x1="35" y1="25" x2="35" y2="75" stroke="#7dd3fc" stroke-width="2"/><line x1="25" y1="65" x2="75" y2="65" stroke="#7dd3fc" stroke-width="2"/></svg>`,
         "Snow": `<svg viewBox="0 0 100 100"><path d="M50 10 L50 90 M10 50 L90 50 M20 20 L80 80 M20 80 L80 20" stroke="#f8fafc" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="#e2e8f0"/></svg>`,
         "Snowman": `<svg viewBox="0 0 100 100"><circle cx="50" cy="70" r="20" fill="#f8fafc"/><circle cx="50" cy="40" r="15" fill="#f8fafc"/><circle cx="50" cy="20" r="10" fill="#f8fafc"/><polygon points="50,20 70,25 50,22" fill="#f97316"/><circle cx="45" cy="18" r="2" fill="#000"/><circle cx="55" cy="18" r="2" fill="#000"/></svg>`,
@@ -349,8 +372,6 @@
         "Iceberg": `<svg viewBox="0 0 100 100"><polygon points="10,75 35,30 50,50 75,25 90,75" fill="#e0f2fe" stroke="#bae6fd" stroke-width="6"/><polygon points="20,72 38,45 55,55 70,38 85,72" fill="#bae6fd"/><rect x="5" y="75" width="90" height="12" fill="#0ea5e9" rx="3" opacity="0.6"/></svg>`,
         "Aurora": `<svg viewBox="0 0 100 100"><rect x="0" y="20" width="100" height="35" fill="#10b981" opacity="0.3"/><rect x="0" y="35" width="100" height="25" fill="#22d3ee" opacity="0.4"/><path d="M5 45 Q20 30 35 45 Q50 25 65 45 Q80 30 95 45" fill="#67e8f9" opacity="0.6"/><circle cx="15" cy="15" r="4" fill="#facc15"/><circle cx="40" cy="12" r="3" fill="#67e8f9"/><circle cx="70" cy="18" r="5" fill="#a5f3fc"/><circle cx="85" cy="10" r="3" fill="#22d3ee"/></svg>`,
         "Walrus": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="62" rx="30" ry="22" fill="#e2e8f0"/><ellipse cx="32" cy="42" rx="14" ry="16" fill="#e2e8f0"/><ellipse cx="68" cy="42" rx="14" ry="16" fill="#e2e8f0"/><circle cx="27" cy="37" r="4" fill="#0f172a"/><circle cx="73" cy="37" r="4" fill="#0f172a"/><line x1="37" y1="55" x2="30" y2="72" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/><line x1="63" y1="55" x2="70" y2="72" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/></svg>`,
-
-        // --- v1.2 kept items only ---
         "Octopus": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="45" rx="22" ry="25" fill="#9f1239"/><circle cx="38" cy="38" r="4" fill="#0f172a"/><circle cx="62" cy="38" r="4" fill="#0f172a"/><path d="M30 65 Q20 80 25 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M40 65 Q32 82 40 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M50 65 Q50 85 48 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M60 65 Q68 82 60 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M70 65 Q80 80 75 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
         "Jellyfish": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="35" rx="25" ry="18" fill="#67e8f9" opacity="0.8"/><path d="M30 48 Q25 65 20 75" stroke="#67e8f9" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M40 48 Q38 70 32 78" stroke="#67e8f9" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M50 48 Q50 72 50 80" stroke="#67e8f9" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M60 48 Q63 68 70 78" stroke="#67e8f9" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M70 48 Q75 65 80 75" stroke="#67e8f9" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
         "Starfish": `<svg viewBox="0 0 100 100"><polygon points="50,10 60,40 90,40 65,60 75,90 50,70 25,90 35,60 10,40 40,40" fill="#f59e0b"/></svg>`,
@@ -364,148 +385,96 @@
         "Puffin": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="25" ry="20" fill="#1e40af"/><circle cx="70" cy="40" r="12" fill="#1e40af"/><polygon points="80 35 95 42 80 48" fill="#f59e0b"/><circle cx="73" cy="38" r="3" fill="#0f172a"/><polygon points="25 50 10 40 20 60" fill="#bae6fd"/><ellipse cx="35" cy="55" rx="5" ry="8" fill="#f59e0b"/></svg>`,
         "Avalanche": `<svg viewBox="0 0 100 100"><polygon points="10 85 30 55 50 75 70 50 90 85" fill="#e2e8f0"/><polygon points="20 85 35 65 50 80 65 65 80 85" fill="#f8fafc"/><path d="M15 80 Q35 60 55 75" stroke="#bae6fd" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
         "Ice Dragon": `<svg viewBox="0 0 100 100"><path d="M20 75 Q40 35 65 45 Q85 25 80 55 Q75 75 25 75 Z" fill="#67e8f9"/><polygon points="65 45 85 30 75 55" fill="#22d3ee"/><polygon points="30 55 15 35 45 50" fill="#22d3ee" opacity="0.8"/><circle cx="72" cy="48" r="3" fill="#f8fafc"/></svg>`,
-
-        // --- PREVIOUS IMPROVED v1.1 ITEMS ---
         "Egyptian Tomb": `<svg viewBox="0 0 100 100">
-  <!-- Sandstone tomb facade with steps -->
   <rect x="12" y="38" width="76" height="52" rx="4" fill="#e2c38a"/>
-  <!-- Sloping entrance pylon -->
   <polygon points="12,38 26,22 74,22 88,38" fill="#d4a96f"/>
-  <!-- Dark tomb doorway -->
   <rect x="38" y="48" width="24" height="38" fill="#1e293b" rx="2"/>
-  <!-- Golden door frame -->
   <rect x="37" y="47" width="26" height="4" fill="#f5c66e"/>
-  <!-- Hieroglyph bands -->
   <rect x="15" y="44" width="70" height="7" fill="#b38a4f"/>
   <rect x="15" y="72" width="70" height="7" fill="#b38a4f"/>
-  <!-- Simple hieroglyph symbols -->
   <text x="22" y="51" fill="#1e293b" font-size="6" font-family="serif">𓂝</text>
   <text x="32" y="51" fill="#1e293b" font-size="6" font-family="serif">𓅓</text>
   <text x="68" y="51" fill="#1e293b" font-size="6" font-family="serif">𓋹</text>
   <text x="22" y="79" fill="#1e293b" font-size="6" font-family="serif">𓁹</text>
   <text x="68" y="79" fill="#1e293b" font-size="6" font-family="serif">𓏏</text>
-  <!-- Side columns / pillars -->
   <rect x="15" y="38" width="6" height="52" fill="#b38a4f"/>
   <rect x="79" y="38" width="6" height="52" fill="#b38a4f"/>
 </svg>`,
         "King Tut": `<svg viewBox="0 0 100 100">
-  <!-- Nemes headdress - exact Tutankhamun style (blue base + gold stripes) -->
   <rect x="13" y="11" width="74" height="41" rx="10" fill="#1e40af"/>
-  <!-- Gold vertical stripes -->
   <rect x="19" y="14" width="7" height="35" fill="#f5c66e"/>
   <rect x="30" y="14" width="7" height="35" fill="#f5c66e"/>
   <rect x="41" y="14" width="7" height="35" fill="#f5c66e"/>
   <rect x="52" y="14" width="7" height="35" fill="#f5c66e"/>
   <rect x="63" y="14" width="7" height="35" fill="#f5c66e"/>
-  <!-- Headdress top fold -->
   <polygon points="13,11 50,3 87,11" fill="#f5c66e"/>
-  <!-- Uraeus cobra (gold with red detail) -->
   <path d="M44 18 Q40 9 36 13 Q44 7 53 13" fill="#dc2626"/>
   <circle cx="44" cy="11" r="3.5" fill="#facc15"/>
-  <!-- Golden death mask face (realistic Tut mask proportions) -->
   <ellipse cx="50" cy="53" rx="27" ry="36" fill="#f5c66e"/>
-  <!-- Iconic black & white eyes with heavy kohl -->
-  <!-- Left eye -->
   <ellipse cx="37" cy="46" rx="6.5" ry="8.5" fill="#f8fafc"/>
   <ellipse cx="37" cy="46" rx="3" ry="4.2" fill="#0f172a"/>
-  <!-- Right eye -->
   <ellipse cx="63" cy="46" rx="6.5" ry="8.5" fill="#f8fafc"/>
   <ellipse cx="63" cy="46" rx="3" ry="4.2" fill="#0f172a"/>
-  <!-- Kohl lines & eyebrows -->
   <path d="M28 39 Q37 36 47 41" stroke="#0f172a" stroke-width="3" fill="none"/>
   <path d="M53 39 Q63 36 72 41" stroke="#0f172a" stroke-width="3" fill="none"/>
-  <!-- Nose -->
   <path d="M49 50 L49 61" stroke="#d97706" stroke-width="4" fill="none"/>
-  <!-- Mouth -->
   <path d="M41 66 Q50 69 59 66" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-  <!-- Ceremonial false beard (black, curved) -->
   <rect x="46.5" y="67" width="7" height="21" rx="3" fill="#1e293b"/>
   <path d="M46.5 86 Q50 91 53.5 86" fill="#1e293b"/>
 </svg>`,
-
-        // --- NEW ITEMS FROM PREVIOUS UPDATES ---
         "Chicken": `<svg viewBox="0 0 100 100">
-  <!-- Body -->
   <ellipse cx="52" cy="58" rx="22" ry="18" fill="#f8c66e"/>
-  <!-- Head -->
   <circle cx="72" cy="42" r="14" fill="#f8c66e"/>
-  <!-- Beak -->
   <polygon points="80,42 88,48 80,53" fill="#ef9e2e"/>
-  <!-- Comb -->
   <path d="M66 30 Q70 22 74 30 Q78 22 82 30" fill="#ef4444"/>
-  <!-- Eye -->
   <circle cx="68" cy="39" r="4" fill="#fff"/>
   <circle cx="68" cy="39" r="2" fill="#0f172a"/>
-  <!-- Wing -->
   <path d="M35 55 Q20 45 28 65 Q40 68 45 55" fill="#e2a84a"/>
-  <!-- Legs -->
   <line x1="42" y1="73" x2="38" y2="85" stroke="#ef9e2e" stroke-width="6" stroke-linecap="round"/>
   <line x1="60" y1="73" x2="64" y2="85" stroke="#ef9e2e" stroke-width="6" stroke-linecap="round"/>
-  <!-- Feet -->
   <polygon points="36,85 32,88 40,88" fill="#ef9e2e"/>
   <polygon points="65,85 69,88 61,88" fill="#ef9e2e"/>
 </svg>`,
         "Watch": `<svg viewBox="0 0 100 100">
-  <!-- Watch face (gold) -->
   <circle cx="50" cy="50" r="28" fill="#f5c66e"/>
-  <!-- Inner face -->
   <circle cx="50" cy="50" r="22" fill="#fff"/>
-  <!-- Hour markers -->
   <line x1="50" y1="32" x2="50" y2="37" stroke="#0f172a" stroke-width="3"/>
   <line x1="72" y1="41" x2="68" y2="44" stroke="#0f172a" stroke-width="3"/>
   <line x1="72" y1="59" x2="68" y2="56" stroke="#0f172a" stroke-width="3"/>
   <line x1="50" y1="68" x2="50" y2="73" stroke="#0f172a" stroke-width="3"/>
   <line x1="28" y1="59" x2="32" y2="56" stroke="#0f172a" stroke-width="3"/>
   <line x1="28" y1="41" x2="32" y2="44" stroke="#0f172a" stroke-width="3"/>
-  <!-- Hands -->
   <line x1="50" y1="50" x2="65" y2="42" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
   <line x1="50" y1="50" x2="38" y2="62" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- Crown -->
   <rect x="47" y="22" width="6" height="8" rx="1" fill="#f5c66e"/>
-  <!-- Band -->
   <rect x="28" y="75" width="44" height="12" rx="3" fill="#1e293b"/>
   <rect x="32" y="78" width="36" height="6" fill="#f5c66e"/>
 </svg>`,
         "Swamp": `<svg viewBox="0 0 100 100">
-  <!-- Murky water base -->
   <rect x="8" y="45" width="84" height="45" rx="15" fill="#3b6b4f"/>
-  <!-- Bubbles & ripples -->
   <circle cx="25" cy="65" r="6" fill="#a3d8b8" opacity="0.6"/>
   <circle cx="45" cy="72" r="4" fill="#a3d8b8" opacity="0.6"/>
   <circle cx="68" cy="58" r="8" fill="#a3d8b8" opacity="0.5"/>
-  <!-- Reeds / plants -->
   <path d="M18 48 Q15 35 22 28" stroke="#16a34a" stroke-width="6" fill="none"/>
   <path d="M32 50 Q28 32 38 25" stroke="#16a34a" stroke-width="5" fill="none"/>
   <path d="M75 47 Q80 30 72 22" stroke="#16a34a" stroke-width="7" fill="none"/>
-  <!-- Mud patches -->
   <ellipse cx="35" cy="78" rx="12" ry="6" fill="#78350f" opacity="0.7"/>
   <ellipse cx="70" cy="80" rx="15" ry="7" fill="#78350f" opacity="0.7"/>
 </svg>`,
         "Solar System": `<svg viewBox="0 0 100 100">
-  <!-- Sun -->
   <circle cx="50" cy="50" r="14" fill="#facc15"/>
-  <!-- Orbits (faint) -->
   <circle cx="50" cy="50" r="22" fill="none" stroke="#e2e8f0" stroke-width="1.5" opacity="0.3"/>
   <circle cx="50" cy="50" r="32" fill="none" stroke="#e2e8f0" stroke-width="1.5" opacity="0.3"/>
-  <!-- Planets -->
-  <!-- Mercury -->
   <circle cx="30" cy="38" r="3" fill="#cbd5e1"/>
-  <!-- Venus -->
   <circle cx="72" cy="35" r="4" fill="#f59e0b"/>
-  <!-- Earth -->
   <circle cx="25" cy="65" r="5" fill="#0ea5e9"/>
-  <!-- Mars -->
   <circle cx="75" cy="68" r="3.5" fill="#ef4444"/>
-  <!-- Jupiter -->
   <circle cx="18" cy="22" r="6" fill="#facc15"/>
 </svg>`,
         "Milky Way": `<svg viewBox="0 0 100 100">
-  <!-- Spiral galaxy core -->
   <circle cx="50" cy="50" r="12" fill="#a855f7"/>
-  <!-- Spiral arms -->
   <path d="M50 50 Q25 20 15 45 Q30 75 50 50" fill="none" stroke="#c4b5fd" stroke-width="8" opacity="0.7"/>
   <path d="M50 50 Q75 80 85 55 Q70 25 50 50" fill="none" stroke="#c4b5fd" stroke-width="8" opacity="0.7"/>
-  <!-- Stars / dust -->
   <circle cx="32" cy="28" r="2" fill="#f8fafc"/>
   <circle cx="68" cy="35" r="1.5" fill="#f8fafc"/>
   <circle cx="22" cy="65" r="2.5" fill="#f8fafc"/>
@@ -513,128 +482,76 @@
   <circle cx="45" cy="18" r="1.8" fill="#f8fafc"/>
 </svg>`,
         "Robber": `<svg viewBox="0 0 100 100">
-  <!-- Body -->
   <rect x="35" y="38" width="30" height="45" rx="5" fill="#1e293b"/>
-  <!-- Head with mask -->
   <circle cx="50" cy="32" r="13" fill="#f8fafc"/>
-  <!-- Mask -->
   <rect x="38" y="25" width="24" height="12" fill="#0f172a"/>
-  <!-- Eyes -->
   <circle cx="42" cy="30" r="2" fill="#fff"/>
   <circle cx="58" cy="30" r="2" fill="#fff"/>
-  <!-- Sack of loot -->
   <ellipse cx="72" cy="55" rx="11" ry="14" fill="#facc15"/>
-  <!-- Dollar sign on sack -->
   <text x="70" y="60" fill="#0f172a" font-size="12" font-weight="bold">$</text>
-  <!-- Legs -->
   <line x1="42" y1="80" x2="38" y2="92" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
   <line x1="58" y1="80" x2="62" y2="92" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
 </svg>`,
         "Restaurant": `<svg viewBox="0 0 100 100">
-  <!-- Building -->
   <rect x="18" y="28" width="64" height="55" rx="6" fill="#64748b"/>
-  <!-- Roof -->
   <polygon points="18,28 50,12 82,28" fill="#b91c1c"/>
-  <!-- Windows -->
   <rect x="28" y="38" width="10" height="10" fill="#38bdf8"/>
   <rect x="62" y="38" width="10" height="10" fill="#38bdf8"/>
-  <!-- Door -->
   <rect x="45" y="55" width="10" height="25" fill="#78350f"/>
-  <!-- Sign -->
   <rect x="32" y="18" width="36" height="12" fill="#fbbf24" rx="2"/>
-  <!-- Fork & knife icon -->
   <line x1="38" y1="22" x2="38" y2="27" stroke="#0f172a" stroke-width="3"/>
   <polygon points="38,22 42,25 38,28" fill="#0f172a"/>
   <line x1="55" y1="22" x2="62" y2="27" stroke="#0f172a" stroke-width="3"/>
 </svg>`,
         "Window": `<svg viewBox="0 0 100 100">
-  <!-- Frame -->
   <rect x="22" y="18" width="56" height="64" rx="6" fill="#64748b"/>
-  <!-- Glass panes -->
   <rect x="28" y="24" width="22" height="22" fill="#bae6fd"/>
   <rect x="50" y="24" width="22" height="22" fill="#bae6fd"/>
   <rect x="28" y="52" width="22" height="22" fill="#bae6fd"/>
   <rect x="50" y="52" width="22" height="22" fill="#bae6fd"/>
-  <!-- Dividers -->
   <line x1="50" y1="24" x2="50" y2="74" stroke="#64748b" stroke-width="4"/>
   <line x1="28" y1="50" x2="72" y2="50" stroke="#64748b" stroke-width="4"/>
 </svg>`,
         "Skyscraper": `<svg viewBox="0 0 100 100">
-  <!-- Main tower -->
   <rect x="28" y="12" width="18" height="78" fill="#64748b"/>
-  <!-- Windows rows -->
   <rect x="32" y="18" width="4" height="4" fill="#bae6fd"/>
   <rect x="38" y="18" width="4" height="4" fill="#bae6fd"/>
   <rect x="32" y="28" width="4" height="4" fill="#bae6fd"/>
   <rect x="38" y="28" width="4" height="4" fill="#bae6fd"/>
-  <!-- More floors -->
   <rect x="32" y="40" width="4" height="4" fill="#bae6fd"/>
   <rect x="38" y="40" width="4" height="4" fill="#bae6fd"/>
   <rect x="32" y="50" width="4" height="4" fill="#bae6fd"/>
   <rect x="38" y="50" width="4" height="4" fill="#bae6fd"/>
-  <!-- Antenna -->
   <rect x="35" y="8" width="2" height="6" fill="#1e293b"/>
-  <!-- Side sections -->
   <rect x="20" y="35" width="8" height="55" fill="#475569"/>
   <rect x="72" y="25" width="8" height="65" fill="#475569"/>
 </svg>`,
-
-        // === UPDATED JEWELRY (circle of pearls necklace - bunch of pearls in perfect circular shape) ===
         "Jewelry": `<svg viewBox="0 0 100 100">
-  <!-- Gold chain forming a circular necklace loop -->
   <ellipse cx="50" cy="49" rx="34" ry="27" fill="none" stroke="#fcd34d" stroke-width="4" stroke-linecap="round"/>
-
-  <!-- Bunch of 12 pearls arranged evenly in a circle (necklace shape) -->
-  
-  <!-- Pearl 1 -->
   <circle cx="23" cy="33" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="23" cy="33" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 2 -->
   <circle cx="30" cy="24" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="30" cy="24" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 3 -->
   <circle cx="39" cy="20" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="39" cy="20" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 4 (top) -->
   <circle cx="50" cy="19" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="50" cy="19" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 5 -->
   <circle cx="61" cy="20" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="61" cy="20" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 6 -->
   <circle cx="70" cy="24" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="70" cy="24" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 7 -->
   <circle cx="77" cy="33" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="77" cy="33" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 8 (right lower) -->
   <circle cx="79" cy="46" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="79" cy="46" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 9 (bottom right) -->
   <circle cx="71" cy="61" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="71" cy="61" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 10 (bottom) -->
   <circle cx="50" cy="66" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="50" cy="66" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 11 (bottom left) -->
   <circle cx="29" cy="61" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="29" cy="61" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Pearl 12 (left lower) -->
   <circle cx="21" cy="46" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <circle cx="21" cy="46" r="2" fill="#fff" opacity="0.75"/>
-
-  <!-- Small gold clasp at top center -->
   <rect x="47" y="15" width="6" height="7" rx="1.5" fill="#facc15"/>
 </svg>`
     };
@@ -644,8 +561,8 @@
         return `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#334155" rx="10"/><text x="50" y="65" fill="#fff" font-family="sans-serif" font-weight="bold" font-size="40" text-anchor="middle">${name.charAt(0)}</text></svg>`;
     }
 
-    // Active recipes
-    const recipes = {
+    // Active recipes (unchanged)
+    const recipes = { /* ... all your original recipes stay exactly the same ... */ 
         "Earth+Water": "Mud", "Fire+Water": "Steam", "Earth+Fire": "Lava", "Water+Wind": "Ice",
         "Fire+Wind": "Smoke", "Earth+Earth": "Mountain", "Water+Water": "Lake", "Fire+Fire": "Sun",
         "Wind+Wind": "Tornado", "Fire+Mud": "Brick", "Brick+Brick": "Wall", "Wall+Wall": "House",
@@ -768,8 +685,8 @@
         "Pearl+Pearl": "Jewelry"
     };
 
-    // Full recipe display
-    const recipeDisplay = {
+    // Full recipe display (unchanged)
+    const recipeDisplay = { /* ... all your original recipeDisplay stays exactly the same ... */ 
         "Mud": ["Earth+Water"],
         "Steam": ["Fire+Water"],
         "Lava": ["Earth+Fire"],
@@ -923,6 +840,8 @@
     let discoveredItems = [];
     let draggedElement = null;
     let offsetX = 0; let offsetY = 0;
+    let currentHintKey = null;   // ← NEW: tracks the current hint so it only changes after you craft it
+
     const workspace = document.getElementById('workspace');
     const logContainer = document.getElementById('log');
     const sidebar = document.getElementById('sidebar');
@@ -930,6 +849,7 @@
     const searchInput = document.getElementById('search-input');
     const extraModal = document.getElementById('extra-modal');
     const infoModal = document.getElementById('info-modal');
+    const hintModal = document.getElementById('hint-modal');   // ← NEW
     const extraCounter = document.getElementById('extra-counter');
 
     function getTimestamp() {
@@ -961,13 +881,16 @@
         }
     }
 
-    function saveGame() { localStorage.setItem('infCraft_customArt_save', JSON.stringify(discoveredItems)); }
+    function saveGame() { 
+        localStorage.setItem('infCraft_customArt_save', JSON.stringify(discoveredItems)); 
+    }
 
     function resetGame() {
         if(confirm("Wipe all progress?")) {
             localStorage.removeItem('infCraft_customArt_save');
             workspace.innerHTML = '';
             searchInput.value = '';
+            currentHintKey = null;   // reset hint too
             loadSave();
             renderLog();
         }
@@ -1101,20 +1024,99 @@
         const wsRect = workspace.getBoundingClientRect();
         const centerX = ((r1.left + r2.left) / 2) - wsRect.left;
         const centerY = ((r1.top + r2.top) / 2) - wsRect.top;
-        el1.remove(); el2.remove();
-        if (!discoveredItems.some(item => item.name === resultName)) {
+
+        el1.remove(); 
+        el2.remove();
+
+        const wasNew = !discoveredItems.some(item => item.name === resultName);
+
+        if (wasNew) {
             discoveredItems.push({ name: resultName, time: getTimestamp() });
             saveGame();
             renderLog(searchInput.value.toLowerCase());
+
+            // If this was the hinted combination → clear the hint so next openHint() gives a fresh one
+            if (currentHintKey && recipes[currentHintKey] === resultName) {
+                currentHintKey = null;
+            }
         }
+
         createWorkspaceItem(resultName, centerX, centerY, true);
     }
 
+    // ====================== NEW HINT SYSTEM ======================
+    function openHint() {
+        const discoveredNames = new Set(discoveredItems.map(i => i.name));
+
+        let possibleHints = [];
+        for (let key in recipes) {
+            if (!key.includes('+')) continue;
+            const parts = key.split('+');
+            const ing1 = parts[0];
+            const ing2 = parts[1];
+            const result = recipes[key];
+
+            if (discoveredNames.has(ing1) && 
+                discoveredNames.has(ing2) && 
+                !discoveredNames.has(result)) {
+                possibleHints.push({key, ing1, ing2, result});
+            }
+        }
+
+        if (possibleHints.length === 0) {
+            document.getElementById('hint-body').innerHTML = `
+                <p style="color:#94a3b8; font-size:1.1rem; margin:40px 0;">
+                    🎉 No more hints available!<br>
+                    You have discovered every possible item!
+                </p>`;
+            hintModal.classList.add('active');
+            return;
+        }
+
+        // Keep the same hint until the player actually crafts it
+        let hintData = possibleHints.find(h => h.key === currentHintKey);
+        if (!hintData) {
+            hintData = possibleHints[Math.floor(Math.random() * possibleHints.length)];
+            currentHintKey = hintData.key;
+        }
+
+        document.getElementById('hint-body').innerHTML = `
+            <p style="margin-bottom:20px; font-weight:bold; color:#10b981;">Try this combination to discover something new!</p>
+            <div class="recipe-row" style="justify-content: center; margin-bottom: 25px;">
+                <div class="mini-item">
+                    ${getCustomArt(hintData.ing1)}
+                    <span>${hintData.ing1}</span>
+                </div>
+                ${customArrowSVG}
+                <div class="mini-item">
+                    ${getCustomArt(hintData.ing2)}
+                    <span>${hintData.ing2}</span>
+                </div>
+            </div>
+            <p style="font-size:1.2rem; font-weight:800; margin:0;">Leads to: <span style="color:#10b981;">${hintData.result}</span></p>
+            <p style="color:#64748b; font-size:0.85rem; margin-top:30px;">Tap anywhere outside to close</p>
+        `;
+
+        hintModal.classList.add('active');
+    }
+
+    function closeHint(e) {
+        if (!e || e.target.id === 'hint-modal' || e.target.classList.contains('close-btn')) {
+            hintModal.classList.remove('active');
+        }
+    }
+
+    // ====================== EXTRA / ENCYCLOPEDIA ======================
     function openExtra() {
         const grid = document.getElementById('extra-grid');
-        grid.innerHTML = '';
+        grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align:center; padding:12px 0; color:#94a3b8; font-size:0.9rem; font-weight:500;">
+                 Tap an item to view details, recipes &amp; discovery date
+            </div>`;
+        
         const totalItems = Object.keys(svgArt).length;
         extraCounter.innerText = `${discoveredItems.length} / ${totalItems} Discovered`;
+
         discoveredItems.forEach(item => {
             const entry = document.createElement('div');
             entry.className = 'log-entry';
@@ -1128,6 +1130,7 @@
             entry.addEventListener('click', () => openInfo(item));
             grid.appendChild(entry);
         });
+
         extraModal.classList.add('active');
     }
 
@@ -1157,7 +1160,6 @@
                 const ing1 = parts[0];
                 const ing2 = parts[1];
                 const hasBoth = discoveredSet.has(ing1) && discoveredSet.has(ing2);
-
                 let rowHTML;
                 if (hasBoth) {
                     rowHTML = `
@@ -1225,6 +1227,7 @@
                 discoveredItems.push({ name: itemName, time: currentTime });
             }
         });
+        currentHintKey = null;   // reset hint after unlock all
         saveGame();
         renderLog(searchInput.value.toLowerCase());
         if (extraModal.classList.contains('active')) openExtra();
