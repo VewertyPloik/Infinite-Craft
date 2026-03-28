@@ -12,7 +12,6 @@
             --card-bg: rgba(30, 41, 59, 0.7);
             --card-border: rgba(255, 255, 255, 0.15);
         }
-
         body, html {
             margin: 0; padding: 0;
             width: 100vw; height: 100vh;
@@ -22,9 +21,7 @@
             overflow: hidden;
             user-select: none; -webkit-user-select: none;
         }
-
         #app { display: flex; width: 100%; height: 100%; position: relative; }
-
         #watermark {
             position: absolute;
             top: 20px;
@@ -37,32 +34,27 @@
             pointer-events: none;
             z-index: 5;
         }
-
         #workspace {
             flex-grow: 1; position: relative;
-            background: 
+            background:
                 radial-gradient(circle at center, #1e293b 0%, #020617 100%),
                 linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             overflow: hidden; touch-action: none;
         }
-
         #sidebar {
             width: 380px; background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(15px); border-left: 1px solid rgba(255,255,255,0.05);
             display: flex; flex-direction: column; z-index: 10;
             box-shadow: -10px 0 40px rgba(0,0,0,0.8);
         }
-
         #sidebar-header {
             padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center;
         }
-
         #sidebar-header h2 {
             margin: 0 0 15px 0; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-weight: 800;
         }
-
         #search-input {
             width: 100%; padding: 10px 15px; box-sizing: border-box;
             background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.2);
@@ -70,23 +62,19 @@
             outline: none; transition: 0.2s; margin-bottom: 15px;
         }
         #search-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
-
         #controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .full-width-btn { grid-column: span 2; background: rgba(16, 185, 129, 0.2) !important; color: #10b981 !important; border-color: #10b981 !important; }
-
         button {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
             color: #cbd5e1; padding: 10px; border-radius: 6px;
             font-weight: bold; cursor: pointer; transition: 0.2s;
         }
         button:hover { background: var(--accent) !important; color: #000 !important; border-color: var(--accent) !important; }
-
         #log {
             flex-grow: 1; overflow-y: auto; padding: 15px;
             display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
             gap: 15px; align-content: start;
         }
-
         .item, .log-entry {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: var(--card-bg); border: 1px solid var(--card-border);
@@ -94,28 +82,23 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4); transition: transform 0.1s, border-color 0.2s;
             padding: 8px; box-sizing: border-box;
         }
-
         .item { position: absolute; cursor: grab; }
         .log-entry { position: relative; cursor: pointer; }
-
         .item:hover, .log-entry:hover { border-color: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
-
         .item.dragging {
             z-index: 1000; cursor: grabbing; transform: scale(1.15);
             box-shadow: 0 20px 40px rgba(0,0,0,0.8); border-color: var(--accent);
         }
-
         .item-icon {
             width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
-        
-        .item span, .log-entry span { 
+     
+        .item span, .log-entry span {
             pointer-events: none; font-size: 0.65rem; font-weight: 800;
             text-transform: uppercase; color: #e2e8f0; text-align: center;
             width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-
         /* --- MODAL STYLES --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -124,7 +107,6 @@
             opacity: 0; transition: opacity 0.3s;
         }
         .modal-overlay.active { display: flex; opacity: 1; }
-
         .modal-content {
             background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px; width: 80%; max-width: 800px; max-height: 80vh;
@@ -132,28 +114,24 @@
             transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
-
         .modal-header {
             padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex; justify-content: space-between; align-items: center;
         }
         .modal-header h2 { margin: 0; color: #10b981; font-size: 1.2rem; display: flex; align-items: center; gap: 15px; }
-        
+     
         #extra-counter {
-            background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 10px; 
+            background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 10px;
             border-radius: 20px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;
             border: 1px solid rgba(16, 185, 129, 0.4);
         }
-
         .close-btn { background: none; border: none; color: #cbd5e1; font-size: 24px; cursor: pointer; padding: 0; line-height: 1; }
         .close-btn:hover { color: #ef4444; background: none !important; border-color: transparent !important; }
-
         .modal-body { padding: 20px; overflow-y: auto; }
-        
+     
         #extra-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px;
         }
-
         #info-modal .modal-content { max-width: 500px; text-align: center; }
         .info-large-icon { width: 120px; height: 120px; margin: 0 auto 15px auto; }
         .info-date { color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
@@ -167,25 +145,20 @@
         .mini-item svg { width: 40px; height: 40px; }
         .mini-item span { font-size: 0.6rem; margin-top: 4px; color: #cbd5e1; font-weight: bold; text-transform: uppercase;}
         .recipe-arrow-svg { width: 30px; height: 30px; margin: 0 10px; }
-
         #unlock-flash {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #10b981; z-index: 9999; pointer-events: none;
             opacity: 0; transition: opacity 0.4s; mix-blend-mode: overlay;
         }
-
         @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
         .pop-anim { animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     </style>
 </head>
 <body>
-
 <div id="unlock-flash"></div>
-
 <div id="extra-modal" class="modal-overlay" onclick="closeExtra(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -195,7 +168,6 @@
         <div class="modal-body" id="extra-grid"></div>
     </div>
 </div>
-
 <div id="info-modal" class="modal-overlay" onclick="closeInfo(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -211,7 +183,6 @@
         </div>
     </div>
 </div>
-
 <div id="app">
     <div id="watermark">game made by Vewerty Ploik</div>
     <div id="workspace"></div>
@@ -228,12 +199,29 @@
         <div id="log"></div>
     </div>
 </div>
-
 <script>
     const customArrowSVG = `<svg class="recipe-arrow-svg" viewBox="0 0 100 100"><path d="M20 50 L70 50 M50 30 L70 50 L50 70" stroke="#10b981" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const unknownSVG = `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#64748b" rx="10"/><text x="50" y="62" fill="#f8fafc" font-family="sans-serif" font-size="45" font-weight="800" text-anchor="middle" dominant-baseline="middle">?</text></svg>`;
+
+    // List of items added in version 1.1
+    const v1_1_Items = [
+        "Ice", "Snow", "Snowman", "Igloo", "Ship", "Pirate", "Kraken", "Mermaid",
+        "Map", "Treasure", "Compass", "Telescope", "Whale", "Dolphin", "Penguin",
+        "Polar Bear", "Flower", "Bee", "Honey", "Rose", "Thorn", "Poison",
+        "Walrus", "Blizzard", "Glacier", "Iceberg", "Aurora",
+        // --- 13 KEPT NEW ITEMS (v1.2) ---
+        "Octopus", "Jellyfish", "Starfish", "Pearl", "Coral", "Reef", "Atlantis",
+        "Siren", "Yeti", "Narwhal", "Puffin", "Avalanche", "Ice Dragon",
+        // --- YOUR NEW v1.1 ITEMS ---
+        "Egyptian Tomb", "King Tut",
+        // --- NEW ITEMS FROM PREVIOUS UPDATES ---
+        "Chicken", "Watch", "Swamp", "Solar System", "Milky Way", "Robber", "Restaurant", "Window", "Skyscraper",
+        // --- NEW ITEM THIS UPDATE ---
+        "Jewelry"
+    ];
 
     const svgArt = {
-        // Base & Earlier Elements
+        // --- v1.0 ITEMS (unchanged) ---
         "Water": `<svg viewBox="0 0 100 100"><path d="M50 15 C 20 50, 20 85, 50 85 C 80 85, 80 50, 50 15" fill="#0ea5e9"/><path d="M60 50 A 15 15 0 0 1 70 70" stroke="rgba(255,255,255,0.5)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
         "Fire": `<svg viewBox="0 0 100 100"><path d="M50 10 Q 30 40 40 60 Q 20 50 30 80 Q 50 90 70 80 Q 80 50 60 60 Q 70 40 50 10 Z" fill="#ef4444"/><path d="M50 40 Q 40 60 45 75 Q 50 80 55 75 Q 60 60 50 40 Z" fill="#facc15"/></svg>`,
         "Earth": `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#84cc16"/><path d="M10 50 A 40 40 0 0 0 90 50 Q 70 30 50 50 Q 30 70 10 50" fill="#10b981"/><path d="M30 20 Q 50 40 70 20" stroke="#4d7c0f" stroke-width="4" fill="none"/></svg>`,
@@ -314,8 +302,6 @@
         "Hero": `<svg viewBox="0 0 100 100"><rect x="35" y="35" width="30" height="35" fill="#facc15" rx="5"/><circle cx="50" cy="20" r="12" fill="#fbcfe8"/><path d="M 25 35 Q 50 20 75 35 L 70 80 Q 50 90 30 80 Z" fill="#dc2626" opacity="0.9"/><line x1="40" y1="70" x2="40" y2="95" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/><line x1="60" y1="70" x2="60" y2="95" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/></svg>`,
         "Castle": `<svg viewBox="0 0 100 100"><rect x="15" y="40" width="70" height="50" fill="#64748b"/><rect x="10" y="20" width="20" height="40" fill="#475569"/><rect x="70" y="20" width="20" height="40" fill="#475569"/><polygon points="10,20 20,5 30,20" fill="#b91c1c"/><polygon points="70,20 80,5 90,20" fill="#b91c1c"/><path d="M 40 90 L 40 60 A 10 10 0 0 1 60 60 L 60 90 Z" fill="#0f172a"/></svg>`,
         "Destruction": `<svg viewBox="0 0 100 100"><polygon points="20,80 40,60 50,80" fill="#78350f"/><polygon points="60,80 70,50 90,80" fill="#64748b"/><polygon points="30,80 40,40 60,80" fill="#94a3b8"/><line x1="20" y1="70" x2="50" y2="50" stroke="#b91c1c" stroke-width="6"/><line x1="80" y1="70" x2="50" y2="40" stroke="#d97706" stroke-width="5"/></svg>`,
-
-        // Superhero Update
         "Aquaman": `<svg viewBox="0 0 100 100"><rect x="35" y="35" width="30" height="20" fill="#f59e0b" rx="2"/><rect x="35" y="55" width="30" height="15" fill="#10b981" rx="2"/><circle cx="50" cy="20" r="12" fill="#fbcfe8"/><path d="M40 20 L40 5 L45 5 L45 35 L40 35 Z" fill="#fbbf24"/></svg>`,
         "Iron": `<svg viewBox="0 0 100 100"><rect x="25" y="40" width="50" height="20" fill="#cbd5e1" rx="2"/><polygon points="30,40 25,60 75,60 80,40" fill="#94a3b8"/><line x1="30" y1="45" x2="75" y2="45" stroke="#f8fafc" stroke-width="2"/></svg>`,
         "Ironman": `<svg viewBox="0 0 100 100"><rect x="30" y="20" width="40" height="50" fill="#dc2626" rx="10"/><polygon points="35,30 65,30 60,65 40,65" fill="#fbbf24"/><rect x="38" y="40" width="10" height="4" fill="#38bdf8"/><rect x="52" y="40" width="10" height="4" fill="#38bdf8"/></svg>`,
@@ -328,14 +314,329 @@
         "Sphinx": `<svg viewBox="0 0 100 100"><polygon points="20,80 50,30 80,80" fill="#fcd34d"/><rect x="40" y="20" width="20" height="25" fill="#fcd34d" rx="5"/><rect x="35" y="20" width="30" height="10" fill="#38bdf8"/><rect x="45" y="20" width="10" height="10" fill="#fbbf24"/><path d="M 15 80 Q 50 60 85 80 Z" fill="#fbbf24"/><line x1="45" y1="35" x2="55" y2="35" stroke="#000" stroke-width="2"/><line x1="40" y1="30" x2="43" y2="30" stroke="#000" stroke-width="2"/><line x1="57" y1="30" x2="60" y2="30" stroke="#000" stroke-width="2"/></svg>`,
         "Flying Pig": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="60" rx="35" ry="25" fill="#fbcfe8"/><ellipse cx="30" cy="55" rx="6" ry="10" fill="#be185d"/><ellipse cx="70" cy="55" rx="6" ry="10" fill="#be185d"/><path d="M 50 40 Q 60 10 90 20 Q 70 30 65 40 Z" fill="#f8fafc"/><path d="M 50 40 Q 40 10 10 20 Q 30 30 35 40 Z" fill="#f8fafc"/></svg>`,
         "Gold": `<svg viewBox="0 0 100 100"><polygon points="30,30 70,30 85,70 15,70" fill="#fbbf24"/><polygon points="35,35 65,35 75,65 25,65" fill="#fcd34d"/><line x1="45" y1="35" x2="35" y2="65" stroke="#fef08a" stroke-width="3"/><circle cx="70" cy="20" r="5" fill="#fff" opacity="0.8"/><line x1="70" y1="10" x2="70" y2="30" stroke="#fff" stroke-width="2" opacity="0.8"/><line x1="60" y1="20" x2="80" y2="20" stroke="#fff" stroke-width="2" opacity="0.8"/></svg>`,
-        
-        // --- NEW UPDATE (Knights, Crabs, Obsidian) ---
         "Crab": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="60" rx="30" ry="20" fill="#ef4444"/><circle cx="35" cy="45" r="5" fill="#fff"/><circle cx="35" cy="45" r="2" fill="#000"/><circle cx="65" cy="45" r="5" fill="#fff"/><circle cx="65" cy="45" r="2" fill="#000"/><path d="M 25 50 Q 10 30 20 20 Q 30 10 35 30 Z" fill="#dc2626"/><path d="M 75 50 Q 90 30 80 20 Q 70 10 65 30 Z" fill="#dc2626"/><path d="M 25 70 L 10 80 M 35 75 L 25 90 M 75 70 L 90 80 M 65 75 L 75 90" stroke="#ef4444" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
         "Knight": `<svg viewBox="0 0 100 100"><path d="M 25 80 L 25 40 Q 50 10 75 40 L 75 80 Z" fill="#94a3b8"/><path d="M 20 50 L 80 50 L 75 75 L 25 75 Z" fill="#cbd5e1"/><line x1="30" y1="58" x2="70" y2="58" stroke="#1e293b" stroke-width="4"/><line x1="30" y1="66" x2="70" y2="66" stroke="#1e293b" stroke-width="4"/><line x1="50" y1="50" x2="50" y2="75" stroke="#1e293b" stroke-width="4"/><path d="M 50 20 Q 70 -10 90 30" stroke="#dc2626" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
         "King": `<svg viewBox="0 0 100 100"><polygon points="15,80 85,80 95,30 70,50 50,20 30,50 5,30" fill="#fbbf24"/><line x1="15" y1="80" x2="85" y2="80" stroke="#b45309" stroke-width="6" stroke-linecap="round"/><circle cx="5" cy="30" r="5" fill="#ef4444"/><circle cx="50" cy="20" r="5" fill="#3b82f6"/><circle cx="95" cy="30" r="5" fill="#10b981"/><circle cx="30" cy="50" r="3" fill="#fff"/><circle cx="70" cy="50" r="3" fill="#fff"/><circle cx="50" cy="65" r="4" fill="#ef4444"/></svg>`,
         "Queen": `<svg viewBox="0 0 100 100"><path d="M 20 80 L 80 80 L 90 40 Q 70 20 50 40 Q 30 20 10 40 Z" fill="#fcd34d"/><line x1="20" y1="80" x2="80" y2="80" stroke="#d97706" stroke-width="6" stroke-linecap="round"/><circle cx="10" cy="40" r="4" fill="#a855f7"/><circle cx="50" cy="40" r="6" fill="#ec4899"/><circle cx="90" cy="40" r="4" fill="#a855f7"/><path d="M 50 20 L 50 35 M 40 27 L 60 27" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="60" r="3" fill="#fff"/><circle cx="70" cy="60" r="3" fill="#fff"/></svg>`,
         "Jester": `<svg viewBox="0 0 100 100"><path d="M 50 40 L 20 10 Q 10 30 30 50 Z" fill="#ef4444"/><path d="M 50 40 L 80 10 Q 90 30 70 50 Z" fill="#3b82f6"/><circle cx="20" cy="10" r="6" fill="#fbbf24"/><circle cx="80" cy="10" r="6" fill="#fbbf24"/><circle cx="50" cy="60" r="25" fill="#fbcfe8"/><circle cx="40" cy="55" r="4" fill="#000"/><circle cx="60" cy="55" r="4" fill="#000"/><path d="M 40 70 Q 50 80 60 70" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M 40 40 L 50 5 L 60 40 Z" fill="#10b981"/><circle cx="50" cy="5" r="6" fill="#fbbf24"/></svg>`,
-        "Obsidian": `<svg viewBox="0 0 100 100"><polygon points="30,80 15,50 40,20 70,30 85,60 60,90" fill="#1e1b4b"/><polygon points="40,20 70,30 50,55" fill="#312e81"/><polygon points="15,50 40,20 50,55" fill="#3730a3"/><polygon points="30,80 15,50 50,55" fill="#4338ca"/><polygon points="60,90 30,80 50,55" fill="#312e81"/><polygon points="85,60 60,90 50,55" fill="#3730a3"/><polygon points="70,30 85,60 50,55" fill="#4338ca"/><line x1="45" y1="35" x2="60" y2="40" stroke="#818cf8" stroke-width="2"/></svg>`
+        "Obsidian": `<svg viewBox="0 0 100 100"><polygon points="30,80 15,50 40,20 70,30 85,60 60,90" fill="#1e1b4b"/><polygon points="40,20 70,30 50,55" fill="#312e81"/><polygon points="15,50 40,20 50,55" fill="#3730a3"/><polygon points="30,80 15,50 50,55" fill="#4338ca"/><polygon points="60,90 30,80 50,55" fill="#312e81"/><polygon points="85,60 60,90 50,55" fill="#3730a3"/><polygon points="70,30 85,60 50,55" fill="#4338ca"/><line x1="45" y1="35" x2="60" y2="40" stroke="#818cf8" stroke-width="2"/></svg>`,
+
+        // --- v1.1 ITEMS ---
+        "Ice": `<svg viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" fill="#bae6fd" stroke="#38bdf8" stroke-width="4"/><line x1="35" y1="25" x2="35" y2="75" stroke="#7dd3fc" stroke-width="2"/><line x1="25" y1="65" x2="75" y2="65" stroke="#7dd3fc" stroke-width="2"/></svg>`,
+        "Snow": `<svg viewBox="0 0 100 100"><path d="M50 10 L50 90 M10 50 L90 50 M20 20 L80 80 M20 80 L80 20" stroke="#f8fafc" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="#e2e8f0"/></svg>`,
+        "Snowman": `<svg viewBox="0 0 100 100"><circle cx="50" cy="70" r="20" fill="#f8fafc"/><circle cx="50" cy="40" r="15" fill="#f8fafc"/><circle cx="50" cy="20" r="10" fill="#f8fafc"/><polygon points="50,20 70,25 50,22" fill="#f97316"/><circle cx="45" cy="18" r="2" fill="#000"/><circle cx="55" cy="18" r="2" fill="#000"/></svg>`,
+        "Igloo": `<svg viewBox="0 0 100 100"><path d="M 10 80 A 40 40 0 0 1 90 80 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="3"/><path d="M 40 80 A 10 10 0 0 1 60 80 Z" fill="#0f172a"/><line x1="10" y1="80" x2="90" y2="80" stroke="#cbd5e1" stroke-width="3"/><line x1="25" y1="60" x2="75" y2="60" stroke="#cbd5e1" stroke-width="3"/><line x1="35" y1="45" x2="65" y2="45" stroke="#cbd5e1" stroke-width="3"/></svg>`,
+        "Ship": `<svg viewBox="0 0 100 100"><polygon points="20,80 80,80 90,60 10,60" fill="#78350f"/><line x1="50" y1="60" x2="50" y2="10" stroke="#451a03" stroke-width="4"/><polygon points="50,15 85,35 50,55" fill="#f8fafc"/><polygon points="50,25 30,35 50,45" fill="#f8fafc"/></svg>`,
+        "Pirate": `<svg viewBox="0 0 100 100"><circle cx="50" cy="40" r="15" fill="#fbcfe8"/><path d="M 25 30 C 50 10, 75 30, 85 45 C 50 45, 25 45, 15 45 C 20 35, 25 30, 25 30 Z" fill="#1e293b"/><line x1="35" y1="45" x2="65" y2="35" stroke="#0f172a" stroke-width="2"/><circle cx="43" cy="40" r="4" fill="#0f172a"/><circle cx="57" cy="38" r="2" fill="#0f172a"/><rect x="35" y="55" width="30" height="30" fill="#b91c1c" rx="4"/></svg>`,
+        "Kraken": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="40" rx="20" ry="25" fill="#be185d"/><circle cx="43" cy="35" r="3" fill="#facc15"/><circle cx="57" cy="35" r="3" fill="#facc15"/><path d="M 35 55 Q 10 70 20 90" stroke="#be185d" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M 45 60 Q 30 80 40 95" stroke="#be185d" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M 55 60 Q 70 80 60 95" stroke="#be185d" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M 65 55 Q 90 70 80 90" stroke="#be185d" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
+        "Mermaid": `<svg viewBox="0 0 100 100"><circle cx="50" cy="25" r="12" fill="#fbcfe8"/><rect x="40" y="37" width="20" height="20" fill="#fbcfe8"/><path d="M 40 57 Q 50 80 80 90 Q 60 90 50 75 Q 40 90 20 90 Q 50 80 60 57 Z" fill="#10b981"/><path d="M 35 15 C 30 30, 70 30, 65 15 Z" fill="#dc2626"/></svg>`,
+        "Map": `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#fef08a"/><path d="M 20 20 L 40 30 L 60 20 L 80 30 L 80 80 L 60 70 L 40 80 L 20 70 Z" fill="#fde047" stroke="#ca8a04" stroke-width="3"/><line x1="45" y1="45" x2="55" y2="55" stroke="#dc2626" stroke-width="4"/><line x1="55" y1="45" x2="45" y2="55" stroke="#dc2626" stroke-width="4"/><path d="M 30 60 C 40 50, 60 60, 70 40" stroke="#000" stroke-width="2" stroke-dasharray="4,4" fill="none"/></svg>`,
+        "Treasure": `<svg viewBox="0 0 100 100"><rect x="20" y="45" width="60" height="35" fill="#78350f" rx="3"/><path d="M 20 45 C 20 20, 80 20, 80 45 Z" fill="#92400e"/><line x1="20" y1="45" x2="80" y2="45" stroke="#fbbf24" stroke-width="4"/><rect x="40" y="40" width="20" height="10" fill="#fcd34d"/><circle cx="50" cy="45" r="2" fill="#000"/><circle cx="35" cy="40" r="4" fill="#fbbf24"/><circle cx="65" cy="40" r="4" fill="#fbbf24"/></svg>`,
+        "Compass": `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="#e2e8f0" stroke="#fbbf24" stroke-width="6"/><circle cx="50" cy="50" r="25" fill="#f8fafc"/><polygon points="50,20 55,50 45,50" fill="#dc2626"/><polygon points="50,80 55,50 45,50" fill="#94a3b8"/><circle cx="50" cy="50" r="4" fill="#0f172a"/></svg>`,
+        "Telescope": `<svg viewBox="0 0 100 100"><polygon points="15,70 30,85 85,30 70,15" fill="#b45309"/><polygon points="25,60 35,70 50,55 40,45" fill="#d97706"/><line x1="15" y1="70" x2="70" y2="15" stroke="#fbbf24" stroke-width="3"/><ellipse cx="80" cy="20" rx="4" ry="10" fill="#38bdf8" transform="rotate(45 80 20)"/></svg>`,
+        "Whale": `<svg viewBox="0 0 100 100"><path d="M 80 60 C 80 30, 20 30, 20 60 C 20 80, 80 80, 80 60 Z" fill="#0284c7"/><path d="M 80 60 C 90 70, 95 50, 95 60 C 95 70, 80 60, 80 60 Z" fill="#0284c7"/><circle cx="35" cy="55" r="3" fill="#fff"/><line x1="40" y1="30" x2="40" y2="10" stroke="#bae6fd" stroke-width="3"/><line x1="40" y1="30" x2="30" y2="15" stroke="#bae6fd" stroke-width="3"/><line x1="40" y1="30" x2="50" y2="15" stroke="#bae6fd" stroke-width="3"/></svg>`,
+        "Dolphin": `<svg viewBox="0 0 100 100"><path d="M 20 70 C 40 30, 70 30, 90 60 C 70 70, 40 70, 20 70 Z" fill="#38bdf8"/><polygon points="50,45 60,25 70,45" fill="#38bdf8"/><polygon points="20,70 5,65 15,80" fill="#38bdf8"/><circle cx="75" cy="50" r="2" fill="#0f172a"/></svg>`,
+        "Penguin": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="25" ry="35" fill="#0f172a"/><ellipse cx="50" cy="60" rx="18" ry="25" fill="#f8fafc"/><circle cx="42" cy="35" r="3" fill="#fff"/><circle cx="58" cy="35" r="3" fill="#fff"/><polygon points="45,45 55,45 50,55" fill="#f97316"/><ellipse cx="30" cy="85" rx="8" ry="4" fill="#f97316"/><ellipse cx="70" cy="85" rx="8" ry="4" fill="#f97316"/></svg>`,
+        "Polar Bear": `<svg viewBox="0 0 100 100"><ellipse cx="60" cy="60" rx="30" ry="20" fill="#f8fafc"/><circle cx="35" cy="45" r="15" fill="#f8fafc"/><circle cx="28" cy="35" r="5" fill="#f8fafc"/><circle cx="42" cy="35" r="5" fill="#f8fafc"/><circle cx="25" cy="45" r="3" fill="#0f172a"/><circle cx="20" cy="50" r="2" fill="#0f172a"/><rect x="40" y="70" width="8" height="15" fill="#e2e8f0" rx="4"/><rect x="70" y="70" width="8" height="15" fill="#e2e8f0" rx="4"/></svg>`,
+        "Flower": `<svg viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="90" stroke="#16a34a" stroke-width="4"/><circle cx="50" cy="40" r="8" fill="#fbbf24"/><circle cx="50" cy="25" r="10" fill="#f472b6"/><circle cx="50" cy="55" r="10" fill="#f472b6"/><circle cx="35" cy="40" r="10" fill="#f472b6"/><circle cx="65" cy="40" r="10" fill="#f472b6"/></svg>`,
+        "Bee": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="20" ry="15" fill="#facc15"/><line x1="45" y1="35" x2="45" y2="65" stroke="#000" stroke-width="4"/><line x1="55" y1="35" x2="55" y2="65" stroke="#000" stroke-width="4"/><circle cx="35" cy="45" r="2" fill="#000"/><polygon points="70,50 85,45 85,55" fill="#facc15"/><ellipse cx="40" cy="30" rx="10" ry="8" fill="#bae6fd" opacity="0.8"/><ellipse cx="60" cy="30" rx="10" ry="8" fill="#bae6fd" opacity="0.8"/></svg>`,
+        "Honey": `<svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="50" fill="#fef08a" rx="5" stroke="#fbbf24" stroke-width="2"/><path d="M 30 50 Q 50 60 70 50 L 70 80 Q 50 80 30 80 Z" fill="#d97706"/><rect x="25" y="20" width="50" height="10" fill="#b45309" rx="2"/><path d="M 45 50 L 45 70 A 5 5 0 0 0 55 70 L 55 50" fill="#f59e0b"/></svg>`,
+        "Rose": `<svg viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="90" stroke="#16a34a" stroke-width="4"/><path d="M 50 20 C 30 20, 30 50, 50 60 C 70 50, 70 20, 50 20 Z" fill="#ef4444"/><path d="M 50 30 C 40 30, 40 45, 50 50 C 60 45, 60 30, 50 30 Z" fill="#dc2626"/><path d="M 50 35 C 45 35, 45 42, 50 45 C 55 42, 55 35, 50 35 Z" fill="#b91c1c"/></svg>`,
+        "Thorn": `<svg viewBox="0 0 100 100"><line x1="50" y1="10" x2="50" y2="90" stroke="#15803d" stroke-width="6"/><polygon points="50,30 70,25 53,40" fill="#16a34a"/><polygon points="50,60 30,55 47,70" fill="#16a34a"/></svg>`,
+        "Poison": `<svg viewBox="0 0 100 100"><path d="M 40 10 L 60 10 L 65 30 L 80 80 L 20 80 L 35 30 Z" fill="#a855f7" stroke="#9333ea" stroke-width="2"/><rect x="45" y="5" width="10" height="8" fill="#78350f"/><circle cx="50" cy="55" r="10" fill="#fff"/><circle cx="46" cy="52" r="2" fill="#000"/><circle cx="54" cy="52" r="2" fill="#000"/><line x1="35" y1="70" x2="65" y2="40" stroke="#fff" stroke-width="3"/><line x1="35" y1="40" x2="65" y2="70" stroke="#fff" stroke-width="3"/></svg>`,
+        "Blizzard": `<svg viewBox="0 0 100 100"><path d="M15 25 L35 15 L55 30 L75 15 L90 25" stroke="#f8fafc" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M10 45 L30 35 L50 50 L70 35 L85 45" stroke="#e2e8f0" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="22" cy="65" r="7" fill="#bae6fd" opacity="0.8"/><circle cx="48" cy="72" r="5" fill="#bae6fd" opacity="0.8"/><circle cx="78" cy="62" r="8" fill="#bae6fd" opacity="0.8"/></svg>`,
+        "Glacier": `<svg viewBox="0 0 100 100"><polygon points="5,85 25,35 45,55 65,30 85,85" fill="#bae6fd"/><polygon points="15,80 32,45 52,60 68,40 82,80" fill="#e0f2fe"/><line x1="20" y1="60" x2="80" y2="60" stroke="#7dd3fc" stroke-width="3"/><line x1="15" y1="70" x2="85" y2="70" stroke="#7dd3fc" stroke-width="3"/></svg>`,
+        "Iceberg": `<svg viewBox="0 0 100 100"><polygon points="10,75 35,30 50,50 75,25 90,75" fill="#e0f2fe" stroke="#bae6fd" stroke-width="6"/><polygon points="20,72 38,45 55,55 70,38 85,72" fill="#bae6fd"/><rect x="5" y="75" width="90" height="12" fill="#0ea5e9" rx="3" opacity="0.6"/></svg>`,
+        "Aurora": `<svg viewBox="0 0 100 100"><rect x="0" y="20" width="100" height="35" fill="#10b981" opacity="0.3"/><rect x="0" y="35" width="100" height="25" fill="#22d3ee" opacity="0.4"/><path d="M5 45 Q20 30 35 45 Q50 25 65 45 Q80 30 95 45" fill="#67e8f9" opacity="0.6"/><circle cx="15" cy="15" r="4" fill="#facc15"/><circle cx="40" cy="12" r="3" fill="#67e8f9"/><circle cx="70" cy="18" r="5" fill="#a5f3fc"/><circle cx="85" cy="10" r="3" fill="#22d3ee"/></svg>`,
+        "Walrus": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="62" rx="30" ry="22" fill="#e2e8f0"/><ellipse cx="32" cy="42" rx="14" ry="16" fill="#e2e8f0"/><ellipse cx="68" cy="42" rx="14" ry="16" fill="#e2e8f0"/><circle cx="27" cy="37" r="4" fill="#0f172a"/><circle cx="73" cy="37" r="4" fill="#0f172a"/><line x1="37" y1="55" x2="30" y2="72" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/><line x1="63" y1="55" x2="70" y2="72" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/></svg>`,
+
+        // --- v1.2 kept items only ---
+        "Octopus": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="45" rx="22" ry="25" fill="#9f1239"/><circle cx="38" cy="38" r="4" fill="#0f172a"/><circle cx="62" cy="38" r="4" fill="#0f172a"/><path d="M30 65 Q20 80 25 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M40 65 Q32 82 40 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M50 65 Q50 85 48 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M60 65 Q68 82 60 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M70 65 Q80 80 75 90" stroke="#9f1239" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
+        "Jellyfish": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="35" rx="25" ry="18" fill="#67e8f9" opacity="0.8"/><path d="M30 48 Q25 65 20 75" stroke="#67e8f9" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M40 48 Q38 70 32 78" stroke="#67e8f9" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M50 48 Q50 72 50 80" stroke="#67e8f9" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M60 48 Q63 68 70 78" stroke="#67e8f9" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M70 48 Q75 65 80 75" stroke="#67e8f9" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+        "Starfish": `<svg viewBox="0 0 100 100"><polygon points="50,10 60,40 90,40 65,60 75,90 50,70 25,90 35,60 10,40 40,40" fill="#f59e0b"/></svg>`,
+        "Pearl": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="20" ry="25" fill="#e2e8f0" stroke="#64748b" stroke-width="6"/><circle cx="50" cy="55" r="12" fill="#f8fafc"/><circle cx="45" cy="50" r="3" fill="#bae6fd" opacity="0.8"/></svg>`,
+        "Coral": `<svg viewBox="0 0 100 100"><path d="M30 80 Q25 50 20 40 Q35 45 40 30 Q45 50 55 35 Q60 55 65 40 Q75 50 80 75" fill="#ec4899" opacity="0.7"/><path d="M45 75 Q40 55 35 65" fill="#f472b6"/><path d="M55 70 Q60 50 70 60" fill="#f472b6"/></svg>`,
+        "Reef": `<svg viewBox="0 0 100 100"><polygon points="20 80 30 50 40 70 50 40 60 65 70 45 80 75 90 55" fill="#16a34a" opacity="0.6"/><polygon points="15 80 25 55 35 75 45 45 55 70 65 50 75 80" fill="#10b981"/><ellipse cx="50" cy="75" rx="40" ry="12" fill="#15803d" opacity="0.5"/></svg>`,
+        "Atlantis": `<svg viewBox="0 0 100 100"><rect x="15" y="45" width="20" height="35" fill="#0ea5e9"/><rect x="40" y="35" width="25" height="45" fill="#22d3ee"/><rect x="70" y="50" width="18" height="30" fill="#0ea5e9"/><rect x="25" y="25" width="8" height="8" fill="#facc15"/><path d="M10 80 L90 80" stroke="#bae6fd" stroke-width="4" fill="none"/><circle cx="50" cy="78" r="4" fill="#bae6fd"/></svg>`,
+        "Siren": `<svg viewBox="0 0 100 100"><circle cx="50" cy="28" r="13" fill="#fbcfe8"/><rect x="38" y="40" width="24" height="22" fill="#fbcfe8"/><path d="M38 60 Q45 85 30 90 Q50 85 70 90 Q55 85 62 60 Z" fill="#a78bfa"/><path d="M40 20 Q35 10 45 8 Q55 10 60 20 Z" fill="#c026d3"/></svg>`,
+        "Yeti": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="28" ry="22" fill="#f8fafc"/><ellipse cx="35" cy="38" rx="15" ry="18" fill="#f8fafc"/><ellipse cx="65" cy="38" rx="15" ry="18" fill="#f8fafc"/><circle cx="30" cy="35" r="4" fill="#0f172a"/><circle cx="70" cy="35" r="4" fill="#0f172a"/><rect x="40" y="68" width="8" height="18" fill="#e2e8f0"/><rect x="52" y="68" width="8" height="18" fill="#e2e8f0"/></svg>`,
+        "Narwhal": `<svg viewBox="0 0 100 100"><path d="M75 50 C80 35 85 35 90 45" fill="#bae6fd"/><ellipse cx="55" cy="50" rx="30" ry="18" fill="#bae6fd"/><polygon points="25 50 10 40 10 60" fill="#bae6fd"/><circle cx="72" cy="47" r="3" fill="#0f172a"/><line x1="85" y1="40" x2="95" y2="32" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/></svg>`,
+        "Puffin": `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="25" ry="20" fill="#1e40af"/><circle cx="70" cy="40" r="12" fill="#1e40af"/><polygon points="80 35 95 42 80 48" fill="#f59e0b"/><circle cx="73" cy="38" r="3" fill="#0f172a"/><polygon points="25 50 10 40 20 60" fill="#bae6fd"/><ellipse cx="35" cy="55" rx="5" ry="8" fill="#f59e0b"/></svg>`,
+        "Avalanche": `<svg viewBox="0 0 100 100"><polygon points="10 85 30 55 50 75 70 50 90 85" fill="#e2e8f0"/><polygon points="20 85 35 65 50 80 65 65 80 85" fill="#f8fafc"/><path d="M15 80 Q35 60 55 75" stroke="#bae6fd" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+        "Ice Dragon": `<svg viewBox="0 0 100 100"><path d="M20 75 Q40 35 65 45 Q85 25 80 55 Q75 75 25 75 Z" fill="#67e8f9"/><polygon points="65 45 85 30 75 55" fill="#22d3ee"/><polygon points="30 55 15 35 45 50" fill="#22d3ee" opacity="0.8"/><circle cx="72" cy="48" r="3" fill="#f8fafc"/></svg>`,
+
+        // --- PREVIOUS IMPROVED v1.1 ITEMS ---
+        "Egyptian Tomb": `<svg viewBox="0 0 100 100">
+  <!-- Sandstone tomb facade with steps -->
+  <rect x="12" y="38" width="76" height="52" rx="4" fill="#e2c38a"/>
+  <!-- Sloping entrance pylon -->
+  <polygon points="12,38 26,22 74,22 88,38" fill="#d4a96f"/>
+  <!-- Dark tomb doorway -->
+  <rect x="38" y="48" width="24" height="38" fill="#1e293b" rx="2"/>
+  <!-- Golden door frame -->
+  <rect x="37" y="47" width="26" height="4" fill="#f5c66e"/>
+  <!-- Hieroglyph bands -->
+  <rect x="15" y="44" width="70" height="7" fill="#b38a4f"/>
+  <rect x="15" y="72" width="70" height="7" fill="#b38a4f"/>
+  <!-- Simple hieroglyph symbols -->
+  <text x="22" y="51" fill="#1e293b" font-size="6" font-family="serif">𓂝</text>
+  <text x="32" y="51" fill="#1e293b" font-size="6" font-family="serif">𓅓</text>
+  <text x="68" y="51" fill="#1e293b" font-size="6" font-family="serif">𓋹</text>
+  <text x="22" y="79" fill="#1e293b" font-size="6" font-family="serif">𓁹</text>
+  <text x="68" y="79" fill="#1e293b" font-size="6" font-family="serif">𓏏</text>
+  <!-- Side columns / pillars -->
+  <rect x="15" y="38" width="6" height="52" fill="#b38a4f"/>
+  <rect x="79" y="38" width="6" height="52" fill="#b38a4f"/>
+</svg>`,
+        "King Tut": `<svg viewBox="0 0 100 100">
+  <!-- Nemes headdress - exact Tutankhamun style (blue base + gold stripes) -->
+  <rect x="13" y="11" width="74" height="41" rx="10" fill="#1e40af"/>
+  <!-- Gold vertical stripes -->
+  <rect x="19" y="14" width="7" height="35" fill="#f5c66e"/>
+  <rect x="30" y="14" width="7" height="35" fill="#f5c66e"/>
+  <rect x="41" y="14" width="7" height="35" fill="#f5c66e"/>
+  <rect x="52" y="14" width="7" height="35" fill="#f5c66e"/>
+  <rect x="63" y="14" width="7" height="35" fill="#f5c66e"/>
+  <!-- Headdress top fold -->
+  <polygon points="13,11 50,3 87,11" fill="#f5c66e"/>
+  <!-- Uraeus cobra (gold with red detail) -->
+  <path d="M44 18 Q40 9 36 13 Q44 7 53 13" fill="#dc2626"/>
+  <circle cx="44" cy="11" r="3.5" fill="#facc15"/>
+  <!-- Golden death mask face (realistic Tut mask proportions) -->
+  <ellipse cx="50" cy="53" rx="27" ry="36" fill="#f5c66e"/>
+  <!-- Iconic black & white eyes with heavy kohl -->
+  <!-- Left eye -->
+  <ellipse cx="37" cy="46" rx="6.5" ry="8.5" fill="#f8fafc"/>
+  <ellipse cx="37" cy="46" rx="3" ry="4.2" fill="#0f172a"/>
+  <!-- Right eye -->
+  <ellipse cx="63" cy="46" rx="6.5" ry="8.5" fill="#f8fafc"/>
+  <ellipse cx="63" cy="46" rx="3" ry="4.2" fill="#0f172a"/>
+  <!-- Kohl lines & eyebrows -->
+  <path d="M28 39 Q37 36 47 41" stroke="#0f172a" stroke-width="3" fill="none"/>
+  <path d="M53 39 Q63 36 72 41" stroke="#0f172a" stroke-width="3" fill="none"/>
+  <!-- Nose -->
+  <path d="M49 50 L49 61" stroke="#d97706" stroke-width="4" fill="none"/>
+  <!-- Mouth -->
+  <path d="M41 66 Q50 69 59 66" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+  <!-- Ceremonial false beard (black, curved) -->
+  <rect x="46.5" y="67" width="7" height="21" rx="3" fill="#1e293b"/>
+  <path d="M46.5 86 Q50 91 53.5 86" fill="#1e293b"/>
+</svg>`,
+
+        // --- NEW ITEMS FROM PREVIOUS UPDATES ---
+        "Chicken": `<svg viewBox="0 0 100 100">
+  <!-- Body -->
+  <ellipse cx="52" cy="58" rx="22" ry="18" fill="#f8c66e"/>
+  <!-- Head -->
+  <circle cx="72" cy="42" r="14" fill="#f8c66e"/>
+  <!-- Beak -->
+  <polygon points="80,42 88,48 80,53" fill="#ef9e2e"/>
+  <!-- Comb -->
+  <path d="M66 30 Q70 22 74 30 Q78 22 82 30" fill="#ef4444"/>
+  <!-- Eye -->
+  <circle cx="68" cy="39" r="4" fill="#fff"/>
+  <circle cx="68" cy="39" r="2" fill="#0f172a"/>
+  <!-- Wing -->
+  <path d="M35 55 Q20 45 28 65 Q40 68 45 55" fill="#e2a84a"/>
+  <!-- Legs -->
+  <line x1="42" y1="73" x2="38" y2="85" stroke="#ef9e2e" stroke-width="6" stroke-linecap="round"/>
+  <line x1="60" y1="73" x2="64" y2="85" stroke="#ef9e2e" stroke-width="6" stroke-linecap="round"/>
+  <!-- Feet -->
+  <polygon points="36,85 32,88 40,88" fill="#ef9e2e"/>
+  <polygon points="65,85 69,88 61,88" fill="#ef9e2e"/>
+</svg>`,
+        "Watch": `<svg viewBox="0 0 100 100">
+  <!-- Watch face (gold) -->
+  <circle cx="50" cy="50" r="28" fill="#f5c66e"/>
+  <!-- Inner face -->
+  <circle cx="50" cy="50" r="22" fill="#fff"/>
+  <!-- Hour markers -->
+  <line x1="50" y1="32" x2="50" y2="37" stroke="#0f172a" stroke-width="3"/>
+  <line x1="72" y1="41" x2="68" y2="44" stroke="#0f172a" stroke-width="3"/>
+  <line x1="72" y1="59" x2="68" y2="56" stroke="#0f172a" stroke-width="3"/>
+  <line x1="50" y1="68" x2="50" y2="73" stroke="#0f172a" stroke-width="3"/>
+  <line x1="28" y1="59" x2="32" y2="56" stroke="#0f172a" stroke-width="3"/>
+  <line x1="28" y1="41" x2="32" y2="44" stroke="#0f172a" stroke-width="3"/>
+  <!-- Hands -->
+  <line x1="50" y1="50" x2="65" y2="42" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="50" y1="50" x2="38" y2="62" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Crown -->
+  <rect x="47" y="22" width="6" height="8" rx="1" fill="#f5c66e"/>
+  <!-- Band -->
+  <rect x="28" y="75" width="44" height="12" rx="3" fill="#1e293b"/>
+  <rect x="32" y="78" width="36" height="6" fill="#f5c66e"/>
+</svg>`,
+        "Swamp": `<svg viewBox="0 0 100 100">
+  <!-- Murky water base -->
+  <rect x="8" y="45" width="84" height="45" rx="15" fill="#3b6b4f"/>
+  <!-- Bubbles & ripples -->
+  <circle cx="25" cy="65" r="6" fill="#a3d8b8" opacity="0.6"/>
+  <circle cx="45" cy="72" r="4" fill="#a3d8b8" opacity="0.6"/>
+  <circle cx="68" cy="58" r="8" fill="#a3d8b8" opacity="0.5"/>
+  <!-- Reeds / plants -->
+  <path d="M18 48 Q15 35 22 28" stroke="#16a34a" stroke-width="6" fill="none"/>
+  <path d="M32 50 Q28 32 38 25" stroke="#16a34a" stroke-width="5" fill="none"/>
+  <path d="M75 47 Q80 30 72 22" stroke="#16a34a" stroke-width="7" fill="none"/>
+  <!-- Mud patches -->
+  <ellipse cx="35" cy="78" rx="12" ry="6" fill="#78350f" opacity="0.7"/>
+  <ellipse cx="70" cy="80" rx="15" ry="7" fill="#78350f" opacity="0.7"/>
+</svg>`,
+        "Solar System": `<svg viewBox="0 0 100 100">
+  <!-- Sun -->
+  <circle cx="50" cy="50" r="14" fill="#facc15"/>
+  <!-- Orbits (faint) -->
+  <circle cx="50" cy="50" r="22" fill="none" stroke="#e2e8f0" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="50" cy="50" r="32" fill="none" stroke="#e2e8f0" stroke-width="1.5" opacity="0.3"/>
+  <!-- Planets -->
+  <!-- Mercury -->
+  <circle cx="30" cy="38" r="3" fill="#cbd5e1"/>
+  <!-- Venus -->
+  <circle cx="72" cy="35" r="4" fill="#f59e0b"/>
+  <!-- Earth -->
+  <circle cx="25" cy="65" r="5" fill="#0ea5e9"/>
+  <!-- Mars -->
+  <circle cx="75" cy="68" r="3.5" fill="#ef4444"/>
+  <!-- Jupiter -->
+  <circle cx="18" cy="22" r="6" fill="#facc15"/>
+</svg>`,
+        "Milky Way": `<svg viewBox="0 0 100 100">
+  <!-- Spiral galaxy core -->
+  <circle cx="50" cy="50" r="12" fill="#a855f7"/>
+  <!-- Spiral arms -->
+  <path d="M50 50 Q25 20 15 45 Q30 75 50 50" fill="none" stroke="#c4b5fd" stroke-width="8" opacity="0.7"/>
+  <path d="M50 50 Q75 80 85 55 Q70 25 50 50" fill="none" stroke="#c4b5fd" stroke-width="8" opacity="0.7"/>
+  <!-- Stars / dust -->
+  <circle cx="32" cy="28" r="2" fill="#f8fafc"/>
+  <circle cx="68" cy="35" r="1.5" fill="#f8fafc"/>
+  <circle cx="22" cy="65" r="2.5" fill="#f8fafc"/>
+  <circle cx="78" cy="68" r="1" fill="#f8fafc"/>
+  <circle cx="45" cy="18" r="1.8" fill="#f8fafc"/>
+</svg>`,
+        "Robber": `<svg viewBox="0 0 100 100">
+  <!-- Body -->
+  <rect x="35" y="38" width="30" height="45" rx="5" fill="#1e293b"/>
+  <!-- Head with mask -->
+  <circle cx="50" cy="32" r="13" fill="#f8fafc"/>
+  <!-- Mask -->
+  <rect x="38" y="25" width="24" height="12" fill="#0f172a"/>
+  <!-- Eyes -->
+  <circle cx="42" cy="30" r="2" fill="#fff"/>
+  <circle cx="58" cy="30" r="2" fill="#fff"/>
+  <!-- Sack of loot -->
+  <ellipse cx="72" cy="55" rx="11" ry="14" fill="#facc15"/>
+  <!-- Dollar sign on sack -->
+  <text x="70" y="60" fill="#0f172a" font-size="12" font-weight="bold">$</text>
+  <!-- Legs -->
+  <line x1="42" y1="80" x2="38" y2="92" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+  <line x1="58" y1="80" x2="62" y2="92" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+</svg>`,
+        "Restaurant": `<svg viewBox="0 0 100 100">
+  <!-- Building -->
+  <rect x="18" y="28" width="64" height="55" rx="6" fill="#64748b"/>
+  <!-- Roof -->
+  <polygon points="18,28 50,12 82,28" fill="#b91c1c"/>
+  <!-- Windows -->
+  <rect x="28" y="38" width="10" height="10" fill="#38bdf8"/>
+  <rect x="62" y="38" width="10" height="10" fill="#38bdf8"/>
+  <!-- Door -->
+  <rect x="45" y="55" width="10" height="25" fill="#78350f"/>
+  <!-- Sign -->
+  <rect x="32" y="18" width="36" height="12" fill="#fbbf24" rx="2"/>
+  <!-- Fork & knife icon -->
+  <line x1="38" y1="22" x2="38" y2="27" stroke="#0f172a" stroke-width="3"/>
+  <polygon points="38,22 42,25 38,28" fill="#0f172a"/>
+  <line x1="55" y1="22" x2="62" y2="27" stroke="#0f172a" stroke-width="3"/>
+</svg>`,
+        "Window": `<svg viewBox="0 0 100 100">
+  <!-- Frame -->
+  <rect x="22" y="18" width="56" height="64" rx="6" fill="#64748b"/>
+  <!-- Glass panes -->
+  <rect x="28" y="24" width="22" height="22" fill="#bae6fd"/>
+  <rect x="50" y="24" width="22" height="22" fill="#bae6fd"/>
+  <rect x="28" y="52" width="22" height="22" fill="#bae6fd"/>
+  <rect x="50" y="52" width="22" height="22" fill="#bae6fd"/>
+  <!-- Dividers -->
+  <line x1="50" y1="24" x2="50" y2="74" stroke="#64748b" stroke-width="4"/>
+  <line x1="28" y1="50" x2="72" y2="50" stroke="#64748b" stroke-width="4"/>
+</svg>`,
+        "Skyscraper": `<svg viewBox="0 0 100 100">
+  <!-- Main tower -->
+  <rect x="28" y="12" width="18" height="78" fill="#64748b"/>
+  <!-- Windows rows -->
+  <rect x="32" y="18" width="4" height="4" fill="#bae6fd"/>
+  <rect x="38" y="18" width="4" height="4" fill="#bae6fd"/>
+  <rect x="32" y="28" width="4" height="4" fill="#bae6fd"/>
+  <rect x="38" y="28" width="4" height="4" fill="#bae6fd"/>
+  <!-- More floors -->
+  <rect x="32" y="40" width="4" height="4" fill="#bae6fd"/>
+  <rect x="38" y="40" width="4" height="4" fill="#bae6fd"/>
+  <rect x="32" y="50" width="4" height="4" fill="#bae6fd"/>
+  <rect x="38" y="50" width="4" height="4" fill="#bae6fd"/>
+  <!-- Antenna -->
+  <rect x="35" y="8" width="2" height="6" fill="#1e293b"/>
+  <!-- Side sections -->
+  <rect x="20" y="35" width="8" height="55" fill="#475569"/>
+  <rect x="72" y="25" width="8" height="65" fill="#475569"/>
+</svg>`,
+
+        // === UPDATED JEWELRY (circle of pearls necklace - bunch of pearls in perfect circular shape) ===
+        "Jewelry": `<svg viewBox="0 0 100 100">
+  <!-- Gold chain forming a circular necklace loop -->
+  <ellipse cx="50" cy="49" rx="34" ry="27" fill="none" stroke="#fcd34d" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Bunch of 12 pearls arranged evenly in a circle (necklace shape) -->
+  
+  <!-- Pearl 1 -->
+  <circle cx="23" cy="33" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="23" cy="33" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 2 -->
+  <circle cx="30" cy="24" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="30" cy="24" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 3 -->
+  <circle cx="39" cy="20" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="39" cy="20" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 4 (top) -->
+  <circle cx="50" cy="19" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="50" cy="19" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 5 -->
+  <circle cx="61" cy="20" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="61" cy="20" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 6 -->
+  <circle cx="70" cy="24" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="70" cy="24" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 7 -->
+  <circle cx="77" cy="33" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="77" cy="33" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 8 (right lower) -->
+  <circle cx="79" cy="46" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="79" cy="46" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 9 (bottom right) -->
+  <circle cx="71" cy="61" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="71" cy="61" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 10 (bottom) -->
+  <circle cx="50" cy="66" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="50" cy="66" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 11 (bottom left) -->
+  <circle cx="29" cy="61" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="29" cy="61" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Pearl 12 (left lower) -->
+  <circle cx="21" cy="46" r="4.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="21" cy="46" r="2" fill="#fff" opacity="0.75"/>
+
+  <!-- Small gold clasp at top center -->
+  <rect x="47" y="15" width="6" height="7" rx="1.5" fill="#facc15"/>
+</svg>`
     };
 
     function getCustomArt(name) {
@@ -343,33 +644,27 @@
         return `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#334155" rx="10"/><text x="50" y="65" fill="#fff" font-family="sans-serif" font-weight="bold" font-size="40" text-anchor="middle">${name.charAt(0)}</text></svg>`;
     }
 
+    // Active recipes
     const recipes = {
-        // Base Game
-        "Earth+Water": "Mud", "Fire+Water": "Steam", "Earth+Fire": "Lava", "Water+Wind": "Wave",
-        "Fire+Wind": "Smoke", "Earth+Earth": "Mountain", "Water+Water": "Lake", "Fire+Fire": "Sun", 
-        "Wind+Wind": "Tornado", "Fire+Mud": "Brick", "Brick+Brick": "Wall", "Wall+Wall": "House", 
-        "Mud+Sun": "Plant", "Earth+Plant": "Tree", "House+House": "City", 
-        "Fire+Stone": "Metal", "Fire+Tornado": "Lightning", "Stone+Wind": "Sand", "Plant+Sun": "Life", 
+        "Earth+Water": "Mud", "Fire+Water": "Steam", "Earth+Fire": "Lava", "Water+Wind": "Ice",
+        "Fire+Wind": "Smoke", "Earth+Earth": "Mountain", "Water+Water": "Lake", "Fire+Fire": "Sun",
+        "Wind+Wind": "Tornado", "Fire+Mud": "Brick", "Brick+Brick": "Wall", "Wall+Wall": "House",
+        "Mud+Sun": "Plant", "Earth+Plant": "Tree", "House+House": "City",
+        "Fire+Stone": "Meteor", "Fire+Tornado": "Lightning", "Stone+Wind": "Sand", "Plant+Sun": "Life",
         "Sun+Sun": "Star", "Stone+Tree": "Wood", "Fire+Sand": "Glass", "Lightning+Metal": "Robot",
         "Earth+Life": "Human", "Metal+Star": "Spaceship", "Metal+Wood": "Sword",
-        
-        // Previous Update
         "Life+Mud": "Pig", "Life+Water": "Fish", "House+Life": "Human", "Love+Love": "Wedding",
-        "Wood+Wood": "Plank", "Tree+Tree": "Forest", "Fire+Forest": "ForestFire", 
+        "Wood+Wood": "Plank", "Tree+Tree": "Forest", "Fire+Forest": "ForestFire",
         "Forest+Human": "Lumberjack", "Lumberjack+Stone": "Axe", "Axe+Tree": "Chopped Tree",
-        "Star+Star": "Planet", "Planet+Planet": "Galaxy", "Alien+Galaxy": "Alien", // Self-reference combo allowed
+        "Star+Star": "Planet", "Planet+Planet": "Galaxy", "Alien+Galaxy": "Alien",
         "Human+Human": "Family", "Lake+Lake": "Ocean", "Lava+Mountain": "Volcano",
         "Family+House": "Love", "Fire+Pig": "Bacon", "Ocean+Volcano": "Island", "Alien+Spaceship": "UFO",
-        
         "Axe+Human": "Lumberjack", "Life+Life": "Death", "Death+Human": "Ghost", "Death+Life": "Zombie",
         "Glass+Sand": "Hourglass", "Hourglass+Sand": "Time", "Human+Time": "Death", "Life+Time": "Death",
         "Fire+Tree": "Ash", "Fire+Wood": "Ash", "Ash+Water": "Mud",
-        
         "Plant+Water": "Tree", "Fire+Plant": "Ash", "Human+House": "Family",
-        "Human+Metal": "Robot", "Glass+Sun": "Fire", "Family+Love": "Family", 
-
-        // v1.0 Update
-        "Planet+Stone": "Moon", "Earth+Star": "Moon", 
+        "Human+Metal": "Robot", "Glass+Sun": "Fire", "Family+Love": "Family",
+        "Planet+Stone": "Moon", "Earth+Star": "Moon",
         "Human+Moon": "Astronaut", "Human+Spaceship": "Astronaut",
         "Black Hole+Death": "Black Hole", "Galaxy+Time": "Black Hole",
         "Star+Stone": "Meteor", "Fire+Stone": "Meteor",
@@ -380,11 +675,10 @@
         "Desert+Wall": "Pyramid",
         "Death+Pyramid": "Mummy", "Sand+Zombie": "Mummy",
         "Human+Sword": "Blood", "Pig+Sword": "Blood",
-        "Axe+Pig": "Meat", "Axe+Fish": "Meat", "Pig+Sword": "Meat", 
+        "Axe+Pig": "Meat", "Axe+Fish": "Meat", "Pig+Sword": "Meat",
         "Blood+Life": "Vampire", "Blood+Human": "Vampire",
         "Pig+Vampire": "Bat", "Moon+Vampire": "Bat",
         "Earth+Time": "Dinosaur", "Dinosaur+Meteor": "Ash",
-
         "Life+Wind": "Bird",
         "Bird+Bird": "Egg",
         "Egg+Time": "Dinosaur",
@@ -392,12 +686,10 @@
         "Life+Star": "Magic",
         "Human+Magic": "Wizard",
         "Magic+Wood": "Wand",
-        "Human+Sword": "Hero", 
+        "Human+Sword": "Hero",
         "House+Stone": "Castle",
         "Castle+Castle": "City",
         "House+Tornado": "Destruction",
-
-        // Superhero Update
         "Hero+Water": "Aquaman",
         "Hero+Lake": "Aquaman",
         "Hero+Ocean": "Aquaman",
@@ -413,24 +705,224 @@
         "Human+Pyramid": "Sphinx",
         "Bird+Pig": "Flying Pig",
         "Metal+Sun": "Gold",
-
-        // Latest Update (Knights, Crabs, Obsidian)
         "Castle+Sword": "Knight",
-        "Earth+Lava": "Stone", // Moved to make room for Obsidian
+        "Earth+Lava": "Stone",
         "Family+King": "Queen",
         "King+Love": "Queen",
         "King+Pig": "Jester",
         "King+Wedding": "Queen",
         "Knight+Knight": "King",
         "Lava+Water": "Obsidian",
-        "Life+Sand": "Crab"
+        "Life+Sand": "Crab",
+        "Ice+Wind": "Snow",
+        "Human+Snow": "Yeti",
+        "House+Snow": "Igloo",
+        "Ocean+Wood": "Ship",
+        "Human+Ship": "Pirate",
+        "Ocean+Pirate": "Kraken",
+        "Fish+Human": "Mermaid",
+        "Magic+Wood": "Map",
+        "Map+Pirate": "Treasure",
+        "Map+Star": "Compass",
+        "Glass+Star": "Telescope",
+        "Dinosaur+Ocean": "Whale",
+        "Bird+Ice": "Penguin",
+        "Life+Plant": "Flower",
+        "Bird+Flower": "Bee",
+        "Bee+Time": "Honey",
+        "Flower+Love": "Rose",
+        "Rose+Sword": "Thorn",
+        "Thorn+Water": "Poison",
+        "Life+Snow": "Polar Bear",
+        "Life+Ocean": "Dolphin",
+        "Ice+Pig": "Walrus",
+        "Snow+Tornado": "Blizzard",
+        "Ice+Mountain": "Glacier",
+        "Ice+Ocean": "Iceberg",
+        "Ice+Star": "Aurora",
+        "Fish+Kraken": "Octopus",
+        "Fish+Wave": "Jellyfish",
+        "Fish+Star": "Starfish",
+        "Ocean+Sand": "Pearl",
+        "Ocean+Plant": "Coral",
+        "Coral+Coral": "Reef",
+        "City+Ocean": "Atlantis",
+        "Magic+Mermaid": "Siren",
+        "Ice+Whale": "Narwhal",
+        "Bird+Penguin": "Puffin",
+        "Mountain+Snow": "Avalanche",
+        "Dragon+Ice": "Ice Dragon",
+        "Mummy+Pyramid": "Egyptian Tomb",
+        "Egyptian Tomb+Pyramid": "King Tut",
+        "Death+King Tut": "Mummy",
+        "Egg+Time": "Chicken",
+        "Gold+Time": "Watch",
+        "Mud+Water": "Swamp",
+        "Moon+Planet": "Earth",
+        "Earth+Sun": "Solar System",
+        "Solar System+Solar System": "Milky Way",
+        "Destruction+House": "Robber",
+        "House+Meat": "Restaurant",
+        "Glass+House": "Window",
+        "Window+City": "Skyscraper",
+        "Pearl+Pearl": "Jewelry"
+    };
+
+    // Full recipe display
+    const recipeDisplay = {
+        "Mud": ["Earth+Water"],
+        "Steam": ["Fire+Water"],
+        "Lava": ["Earth+Fire"],
+        "Wave": ["Water+Wind"],
+        "Smoke": ["Fire+Wind"],
+        "Mountain": ["Earth+Earth"],
+        "Lake": ["Water+Water"],
+        "Sun": ["Fire+Fire"],
+        "Tornado": ["Wind+Wind"],
+        "Brick": ["Fire+Mud"],
+        "Wall": ["Brick+Brick"],
+        "House": ["Wall+Wall"],
+        "Plant": ["Mud+Sun"],
+        "Tree": ["Earth+Plant", "Plant+Water"],
+        "City": ["House+House", "Castle+Castle"],
+        "Metal": ["Fire+Stone"],
+        "Lightning": ["Fire+Tornado"],
+        "Sand": ["Stone+Wind"],
+        "Life": ["Plant+Sun"],
+        "Star": ["Sun+Sun"],
+        "Wood": ["Stone+Tree"],
+        "Glass": ["Fire+Sand"],
+        "Robot": ["Lightning+Metal"],
+        "Human": ["Earth+Life", "House+Life"],
+        "Spaceship": ["Metal+Star"],
+        "Sword": ["Metal+Wood"],
+        "Pig": ["Life+Mud"],
+        "Fish": ["Life+Water"],
+        "Wedding": ["Love+Love"],
+        "Plank": ["Wood+Wood"],
+        "Forest": ["Tree+Tree"],
+        "ForestFire": ["Fire+Forest"],
+        "Lumberjack": ["Forest+Human", "Axe+Human"],
+        "Axe": ["Lumberjack+Stone"],
+        "Chopped Tree": ["Axe+Tree"],
+        "Planet": ["Star+Star"],
+        "Galaxy": ["Planet+Planet"],
+        "Alien": ["Alien+Galaxy"],
+        "Family": ["Human+Human", "Family+House"],
+        "Ocean": ["Lake+Lake"],
+        "Volcano": ["Lava+Mountain"],
+        "Love": ["Family+House"],
+        "Bacon": ["Fire+Pig"],
+        "Island": ["Ocean+Volcano"],
+        "UFO": ["Alien+Spaceship"],
+        "Death": ["Life+Life", "Human+Time", "Life+Time"],
+        "Ghost": ["Death+Human"],
+        "Zombie": ["Death+Life"],
+        "Hourglass": ["Glass+Sand"],
+        "Time": ["Hourglass+Sand"],
+        "Ash": ["Fire+Tree", "Fire+Wood", "Dinosaur+Meteor"],
+        "Moon": ["Planet+Stone", "Earth+Star"],
+        "Astronaut": ["Human+Moon", "Human+Spaceship"],
+        "Black Hole": ["Black Hole+Death", "Galaxy+Time"],
+        "Meteor": ["Star+Stone", "Fire+Stone"],
+        "Tsunami": ["Ocean+Tornado", "Earth+Wave"],
+        "Desert": ["Sand+Sand", "Desert+Sun"],
+        "Oasis": ["Desert+Water", "Desert+Lake"],
+        "Cactus": ["Desert+Plant", "Desert+Tree"],
+        "Pyramid": ["Desert+Wall"],
+        "Mummy": ["Death+Pyramid", "Sand+Zombie", "King Tut+Death"],
+        "Blood": ["Human+Sword", "Pig+Sword"],
+        "Meat": ["Axe+Pig", "Axe+Fish", "Pig+Sword"],
+        "Vampire": ["Blood+Life", "Blood+Human"],
+        "Bat": ["Pig+Vampire", "Moon+Vampire"],
+        "Dinosaur": ["Earth+Time", "Egg+Time"],
+        "Bird": ["Life+Wind"],
+        "Egg": ["Bird+Bird"],
+        "Dragon": ["Dinosaur+Fire"],
+        "Magic": ["Life+Star"],
+        "Wizard": ["Human+Magic"],
+        "Wand": ["Magic+Wood"],
+        "Hero": ["Human+Sword"],
+        "Castle": ["House+Stone"],
+        "Destruction": ["House+Tornado"],
+        "Aquaman": ["Hero+Water", "Hero+Lake", "Hero+Ocean", "Hero+Trident"],
+        "Iron": ["Stone+Stone"],
+        "Ironman": ["Hero+Iron"],
+        "Batman": ["Bat+Hero"],
+        "Superman": ["Alien+Hero"],
+        "Trident": ["Ocean+Sword"],
+        "Submarine": ["Ocean+Spaceship"],
+        "Frankenstein": ["Lightning+Zombie"],
+        "Sandcastle": ["Castle+Sand"],
+        "Sphinx": ["Human+Pyramid"],
+        "Flying Pig": ["Bird+Pig"],
+        "Gold": ["Metal+Sun"],
+        "Knight": ["Castle+Sword"],
+        "Queen": ["Family+King", "King+Love", "King+Wedding"],
+        "Jester": ["King+Pig"],
+        "King": ["Knight+Knight"],
+        "Obsidian": ["Lava+Water"],
+        "Crab": ["Life+Sand"],
+        "Ice": ["Water+Wind"],
+        "Snow": ["Ice+Wind"],
+        "Snowman": ["Human+Snow"],
+        "Igloo": ["House+Snow"],
+        "Ship": ["Ocean+Wood"],
+        "Pirate": ["Human+Ship"],
+        "Kraken": ["Ocean+Pirate"],
+        "Mermaid": ["Fish+Human"],
+        "Map": ["Magic+Wood"],
+        "Treasure": ["Map+Pirate"],
+        "Compass": ["Map+Star"],
+        "Telescope": ["Glass+Star"],
+        "Whale": ["Dinosaur+Ocean"],
+        "Dolphin": ["Life+Ocean"],
+        "Penguin": ["Bird+Ice"],
+        "Polar Bear": ["Life+Snow"],
+        "Flower": ["Life+Plant"],
+        "Bee": ["Bird+Flower"],
+        "Honey": ["Bee+Time"],
+        "Rose": ["Flower+Love"],
+        "Thorn": ["Rose+Sword"],
+        "Poison": ["Thorn+Water"],
+        "Walrus": ["Ice+Pig"],
+        "Blizzard": ["Snow+Tornado"],
+        "Glacier": ["Ice+Mountain"],
+        "Iceberg": ["Ice+Ocean"],
+        "Aurora": ["Ice+Star"],
+        "Octopus": ["Fish+Kraken"],
+        "Jellyfish": ["Fish+Wave"],
+        "Starfish": ["Fish+Star"],
+        "Pearl": ["Ocean+Sand"],
+        "Coral": ["Ocean+Plant"],
+        "Reef": ["Coral+Coral"],
+        "Atlantis": ["City+Ocean"],
+        "Siren": ["Magic+Mermaid"],
+        "Yeti": ["Human+Snow"],
+        "Narwhal": ["Ice+Whale"],
+        "Puffin": ["Bird+Penguin"],
+        "Avalanche": ["Mountain+Snow"],
+        "Ice Dragon": ["Dragon+Ice"],
+        "Egyptian Tomb": ["Mummy+Pyramid"],
+        "King Tut": ["Egyptian Tomb+Pyramid"],
+        "Stone": ["Earth+Lava"],
+        "Chicken": ["Egg+Time"],
+        "Watch": ["Gold+Time"],
+        "Swamp": ["Mud+Water"],
+        "Earth": ["Moon+Planet"],
+        "Solar System": ["Earth+Sun"],
+        "Milky Way": ["Solar System+Solar System"],
+        "Robber": ["Destruction+House"],
+        "Restaurant": ["House+Meat"],
+        "Window": ["Glass+House"],
+        "Skyscraper": ["Window+City"],
+        "Jewelry": ["Pearl+Pearl"]
     };
 
     const baseElements = ["Water", "Fire", "Earth", "Wind"];
     let discoveredItems = [];
     let draggedElement = null;
     let offsetX = 0; let offsetY = 0;
-
     const workspace = document.getElementById('workspace');
     const logContainer = document.getElementById('log');
     const sidebar = document.getElementById('sidebar');
@@ -441,9 +933,9 @@
     const extraCounter = document.getElementById('extra-counter');
 
     function getTimestamp() {
-        return new Date().toLocaleString(undefined, { 
-            year: 'numeric', month: 'short', day: 'numeric', 
-            hour: '2-digit', minute: '2-digit' 
+        return new Date().toLocaleString(undefined, {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
         });
     }
 
@@ -459,12 +951,8 @@
         const saved = localStorage.getItem('infCraft_customArt_save');
         if (saved) {
             let parsed = JSON.parse(saved);
-            
-            // Clean up Pigman if it was saved from the previous version
-            parsed = parsed.filter(item => (item.name || item) !== "Pigman");
-            
             discoveredItems = parsed.map(item => ({
-                name: item.name || item, 
+                name: item.name || item,
                 time: item.time || getTimestamp()
             }));
         } else {
@@ -501,33 +989,24 @@
 
     function renderLog(filterText = "") {
         logContainer.innerHTML = '';
-        
         discoveredItems.forEach(item => {
             if (filterText && !item.name.toLowerCase().includes(filterText)) return;
-
             const entry = document.createElement('div');
             entry.className = 'log-entry';
-            
             const iconDiv = document.createElement('div');
             iconDiv.className = 'item-icon';
             iconDiv.innerHTML = getCustomArt(item.name);
-
             const textSpan = document.createElement('span');
             textSpan.innerText = item.name;
-
             entry.appendChild(iconDiv);
             entry.appendChild(textSpan);
-
             entry.addEventListener('pointerdown', (e) => {
-                e.preventDefault(); 
+                e.preventDefault();
                 const wsRect = workspace.getBoundingClientRect();
-                
                 const maxX = Math.max(0, wsRect.width - 90);
                 const maxY = Math.max(0, wsRect.height - 100);
-                
                 const randX = Math.floor(Math.random() * maxX);
                 const randY = Math.floor(Math.random() * maxY);
-
                 createWorkspaceItem(item.name, randX, randY, true);
             });
             logContainer.appendChild(entry);
@@ -538,28 +1017,22 @@
         const el = document.createElement('div');
         el.className = 'item';
         if(animate) el.classList.add('pop-anim');
-        
         const iconDiv = document.createElement('div');
         iconDiv.className = 'item-icon';
         iconDiv.innerHTML = getCustomArt(itemName);
-
         const textSpan = document.createElement('span');
         textSpan.innerText = itemName;
-
         el.appendChild(iconDiv);
         el.appendChild(textSpan);
         el.dataset.name = itemName;
-        
         el.style.left = `${x}px`;
         el.style.top = `${y}px`;
-
         el.addEventListener('dblclick', (e) => {
             e.stopPropagation();
             const currentX = parseFloat(el.style.left);
             const currentY = parseFloat(el.style.top);
             createWorkspaceItem(itemName, currentX + 25, currentY + 25, true);
         });
-        
         workspace.appendChild(el);
         if(animate) setTimeout(() => el.classList.remove('pop-anim'), 400);
         return el;
@@ -582,22 +1055,19 @@
                 startDragging(target, e);
             }
         });
-
         document.addEventListener('pointermove', (e) => {
             if (!draggedElement) return;
-            e.preventDefault(); 
+            e.preventDefault();
             const wsRect = workspace.getBoundingClientRect();
             draggedElement.style.left = `${e.clientX - wsRect.left - offsetX}px`;
             draggedElement.style.top = `${e.clientY - wsRect.top - offsetY}px`;
         }, { passive: false });
-
         document.addEventListener('pointerup', (e) => {
             if (!draggedElement) return;
             draggedElement.classList.remove('dragging');
             if (e.pointerId) draggedElement.releasePointerCapture(e.pointerId);
-
             const sbRect = sidebar.getBoundingClientRect();
-            if (e.clientX >= sbRect.left && e.clientY >= sbRect.top && e.clientY <= sbRect.bottom) { 
+            if (e.clientX >= sbRect.left && e.clientY >= sbRect.top && e.clientY <= sbRect.bottom) {
                 draggedElement.remove();
             } else {
                 checkForCombination(draggedElement);
@@ -609,18 +1079,14 @@
     function checkForCombination(draggedEl) {
         const items = Array.from(workspace.querySelectorAll('.item'));
         const rect1 = draggedEl.getBoundingClientRect();
-
         for (let otherEl of items) {
             if (otherEl === draggedEl) continue;
             const rect2 = otherEl.getBoundingClientRect();
-
-            if (!(rect1.right - 15 < rect2.left + 15 || rect1.left + 15 > rect2.right - 15 || 
-                  rect1.bottom - 15 < rect2.top + 15 || rect1.top + 15 > rect2.bottom - 15)) {
-                
+            if (!(rect1.right - 15 < rect2.left + 15 || rect1.left + 15 > rect2.right - 15 ||
+                  rect1.bottom - 15 < rect2.top + 15 || rect1.top + 15 > rect2.bottom + 15)) {
                 const name1 = draggedEl.dataset.name;
                 const name2 = otherEl.dataset.name;
                 const sortedKey = [name1, name2].sort().join('+');
-                
                 if (recipes[sortedKey]) {
                     combineItems(draggedEl, otherEl, recipes[sortedKey]);
                     break;
@@ -633,47 +1099,35 @@
         const r1 = el1.getBoundingClientRect();
         const r2 = el2.getBoundingClientRect();
         const wsRect = workspace.getBoundingClientRect();
-        
         const centerX = ((r1.left + r2.left) / 2) - wsRect.left;
         const centerY = ((r1.top + r2.top) / 2) - wsRect.top;
-
         el1.remove(); el2.remove();
-
         if (!discoveredItems.some(item => item.name === resultName)) {
             discoveredItems.push({ name: resultName, time: getTimestamp() });
             saveGame();
-            renderLog(searchInput.value.toLowerCase()); 
+            renderLog(searchInput.value.toLowerCase());
         }
-        
         createWorkspaceItem(resultName, centerX, centerY, true);
     }
 
     function openExtra() {
         const grid = document.getElementById('extra-grid');
         grid.innerHTML = '';
-        
-        // Update Tracker
         const totalItems = Object.keys(svgArt).length;
         extraCounter.innerText = `${discoveredItems.length} / ${totalItems} Discovered`;
-        
         discoveredItems.forEach(item => {
             const entry = document.createElement('div');
             entry.className = 'log-entry';
-            
             const iconDiv = document.createElement('div');
             iconDiv.className = 'item-icon';
             iconDiv.innerHTML = getCustomArt(item.name);
-
             const textSpan = document.createElement('span');
             textSpan.innerText = item.name;
-
             entry.appendChild(iconDiv);
             entry.appendChild(textSpan);
-
             entry.addEventListener('click', () => openInfo(item));
             grid.appendChild(entry);
         });
-
         extraModal.classList.add('active');
     }
 
@@ -687,36 +1141,56 @@
         document.getElementById('info-title').innerText = itemData.name;
         document.getElementById('info-icon').innerHTML = getCustomArt(itemData.name);
         document.getElementById('info-date').innerText = `Discovered: ${itemData.time}`;
-        document.getElementById('info-version').innerText = `Added in: v1.0`;
+        const versionStr = v1_1_Items.includes(itemData.name) ? "v1.1" : "v1.0";
+        document.getElementById('info-version').innerText = `Added in: ${versionStr}`;
 
         const recipeContainer = document.getElementById('info-recipes');
         recipeContainer.innerHTML = '';
-
-        const waysToCraft = Object.keys(recipes).filter(key => recipes[key] === itemData.name);
+        const waysToCraft = recipeDisplay[itemData.name] || [];
+        const discoveredSet = new Set(discoveredItems.map(i => i.name));
 
         if (waysToCraft.length === 0) {
             recipeContainer.innerHTML = '<p style="color: #cbd5e1; font-weight: bold; margin: 0;">Base Element (No crafting required)</p>';
         } else {
             waysToCraft.forEach(recipeKey => {
-                const [ing1, ing2] = recipeKey.split('+');
-                
-                const rowHTML = `
-                    <div class="recipe-row">
-                        <div class="mini-item">
-                            ${getCustomArt(ing1)}
-                            <span>${ing1}</span>
+                const parts = recipeKey.split('+');
+                const ing1 = parts[0];
+                const ing2 = parts[1];
+                const hasBoth = discoveredSet.has(ing1) && discoveredSet.has(ing2);
+
+                let rowHTML;
+                if (hasBoth) {
+                    rowHTML = `
+                        <div class="recipe-row">
+                            <div class="mini-item">
+                                ${getCustomArt(ing1)}
+                                <span>${ing1}</span>
+                            </div>
+                            ${customArrowSVG}
+                            <div class="mini-item">
+                                ${getCustomArt(ing2)}
+                                <span>${ing2}</span>
+                            </div>
                         </div>
-                        ${customArrowSVG}
-                        <div class="mini-item">
-                            ${getCustomArt(ing2)}
-                            <span>${ing2}</span>
+                    `;
+                } else {
+                    rowHTML = `
+                        <div class="recipe-row">
+                            <div class="mini-item">
+                                ${unknownSVG}
+                                <span>???</span>
+                            </div>
+                            ${customArrowSVG}
+                            <div class="mini-item">
+                                ${unknownSVG}
+                                <span>???</span>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
                 recipeContainer.innerHTML += rowHTML;
             });
         }
-
         infoModal.classList.add('active');
     }
 
@@ -731,10 +1205,9 @@
         document.addEventListener('keydown', (e) => {
             if (e.target === searchInput) return;
             keyBuffer += e.key;
-            if (keyBuffer.length > 10) keyBuffer = keyBuffer.substring(1); 
-            
+            if (keyBuffer.length > 10) keyBuffer = keyBuffer.substring(1);
             if (keyBuffer.includes("5998")) {
-                keyBuffer = ""; 
+                keyBuffer = "";
                 triggerUnlockAll();
             }
         });
@@ -743,21 +1216,18 @@
     function triggerUnlockAll() {
         flashScreen.style.opacity = "1";
         setTimeout(() => flashScreen.style.opacity = "0", 400);
-
         let allPossibleItems = new Set(baseElements);
         Object.values(recipes).forEach(item => allPossibleItems.add(item));
-        Object.keys(svgArt).forEach(item => allPossibleItems.add(item)); 
-
+        Object.keys(svgArt).forEach(item => allPossibleItems.add(item));
         const currentTime = getTimestamp();
         allPossibleItems.forEach(itemName => {
             if (!discoveredItems.some(item => item.name === itemName)) {
                 discoveredItems.push({ name: itemName, time: currentTime });
             }
         });
-
         saveGame();
         renderLog(searchInput.value.toLowerCase());
-        if (extraModal.classList.contains('active')) openExtra(); 
+        if (extraModal.classList.contains('active')) openExtra();
     }
 
     init();
